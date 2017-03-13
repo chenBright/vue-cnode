@@ -17,7 +17,9 @@
     "vue.js"
   ],
   "dependencies": {
+    "alloytouch": "^0.2.1",
     "axios": "^0.15.3",
+    "v-tap": "^2.2.2",
     "vue": "^2.2.2",
     "vue-axios": "^2.0.1",
     "vue-router": "^2.2.0",

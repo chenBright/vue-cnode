@@ -1,7 +1,7 @@
 <template>
     <div class="index">
         <img class="vue-logo" src="../assets/images/vue-logo.png">
-        <loading></loading>
+        <el-loading></el-loading>
     </div>
 </template>
 
@@ -11,7 +11,7 @@ import loading from '../components/loading';
 export default {
     name: 'index',
     components: {
-        loading
+        'el-loading': loading
     }
 };
 </script>

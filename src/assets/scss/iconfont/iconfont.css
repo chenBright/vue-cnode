@@ -1,0 +1,41 @@
+
+@font-face {font-family: "iconfont";
+  src: url('iconfont.eot?t=1489375041080'); /* IE9*/
+  src: url('iconfont.eot?t=1489375041080#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1489375041080') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1489375041080') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1489375041080#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-msg:before { content: "\e61f"; }
+
+.icon-right:before { content: "\e609"; }
+
+.icon-denglu:before { content: "\e600"; }
+
+.icon-good:before { content: "\e610"; }
+
+.icon-share:before { content: "\e62e"; }
+
+.icon-write:before { content: "\e603"; }
+
+.icon-icon:before { content: "\e604"; }
+
+.icon-about:before { content: "\e61e"; }
+
+.icon-fenxiangbian:before { content: "\e685"; }
+
+.icon-caidan:before { content: "\e614"; }
+
+.icon-all:before { content: "\e66e"; }
+
+.icon-questionandanswer01:before { content: "\e64c"; }
+

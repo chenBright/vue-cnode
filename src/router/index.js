@@ -9,5 +9,17 @@ export default new Router({
     routes: [{
         path: '/',
         component: index
+    },
+    {
+        path: '/list',
+        name: 'list'
+    },
+    {
+        path: '/about',
+        name: 'about'
+    },
+    {
+        path: '/message',
+        name: 'message'
     }]
 });
