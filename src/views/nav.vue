@@ -1,14 +1,14 @@
 <template>
     <section class="el-nav">
-        <div class="page-shade" v-show="isShowMenu" v-tap.prevent="{ methods : hideMenu }"></div>
         <el-header @clickMenuIcon="showMenu" :isShowMenu="isShowMenu"></el-header>
+        <div class="page-shade" v-show="isShowMenu" v-tap.prevent="{ methods : hideMenu }"></div>
         <el-menu :isShow="isShowMenu"></el-menu>
     </section>
 </template>
 
 <script>
-import header from '../components/header';
-import menu from '../components/menu';
+import header from '@/components/header';
+import menu from '@/components/menu';
 
 export default {
     name: 'el-nav',
