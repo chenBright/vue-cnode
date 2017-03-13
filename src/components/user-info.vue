@@ -36,7 +36,7 @@ export default {
         height: 40px;
         background: url(../assets/images/user.png) no-repeat center center;
         background-size: 40px 40px;
-        border-radius: 20px;
+        border-radius: 50%;
         vertical-align: sub;
     }
     &__name {

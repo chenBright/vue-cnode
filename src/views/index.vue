@@ -1,8 +1,8 @@
 <template>
-    <div class="index">
+    <section class="index">
         <img class="vue-logo" src="../assets/images/vue-logo.png">
         <el-loading></el-loading>
-    </div>
+    </section>
 </template>
 
 <script>
