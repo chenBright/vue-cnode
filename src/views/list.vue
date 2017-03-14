@@ -156,6 +156,14 @@ export default {
     name: 'list',
     mounted() {
         new BScroll(this.$refs.scroll);
+    },
+    beforeRouteUpdate(to, from, next) {
+        this.$events.emit('routerChange');
+        next();
+    },
+    beforeRouteLeave(to, from, next) {
+        this.$events.emit('routerChange');
+        next();
     }
 };
 </script>

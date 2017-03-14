@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import nav from '@/views/nav';
+import nav from './views/nav';
 
 export default {
     name: 'app',

@@ -5,6 +5,7 @@ import vueTap from 'v-tap';
 
 import App from './App';
 import router from './router';
+import EventBus from './plugins/event-bus';
 
 
 // scss css
@@ -14,10 +15,15 @@ import './assets/scss/common/common.scss';
 
 // 安装插件
 Vue.use(vueTap);
+Vue.use(EventBus);
 
 Vue.config.productionTip = false;
 
-/* eslint-disable no-new */
+// router.beforeEach((to, from, next) => {
+//     EventBus.emit('routerChange');
+//     next();
+// });
+
 new Vue({
     el: '#app',
     router,
