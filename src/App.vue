@@ -14,6 +14,10 @@ export default {
     name: 'app',
     components: {
         'el-nav': nav
+    },
+    beforeRouteEnter(to, from, next) {
+        console.log(this);
+        next();
     }
 };
 </script>
