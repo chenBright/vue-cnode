@@ -1,6 +1,54 @@
 <template>
-    <section class="list">
+    <section class="list" ref="scroll">
         <ul>
+            <li class="topics-item">
+                <h2 class="topics-item__title" title="置顶">饿了么大前端 Node.js 进阶教程</h2>
+                <div class="topics-item__info">
+                    <img class="topics-item__avatar" src="https://avatars3.githubusercontent.com/u/12249635?v=3&s=120" alt="用户头像">
+                    <div class="topics-item__info-wrapper">
+                        <p class="topics-item__inline-info">
+                            <span class="topics-item__name">chenBright</span>
+                            <span class="topics-item__status"><b class="topics-item__status--emphasis">12</b> / 345</span>
+                        </p>
+                        <p class="topics-item__inline-info">
+                            <time class="topics-item__public-time">两周前</time>
+                            <time class="topics-item__reply-time">1天前</time>
+                        </p>
+                    </div>
+                </div>
+            </li>
+            <li class="topics-item">
+                <h2 class="topics-item__title" title="置顶">饿了么大前端 Node.js 进阶教程</h2>
+                <div class="topics-item__info">
+                    <img class="topics-item__avatar" src="https://avatars3.githubusercontent.com/u/12249635?v=3&s=120" alt="用户头像">
+                    <div class="topics-item__info-wrapper">
+                        <p class="topics-item__inline-info">
+                            <span class="topics-item__name">chenBright</span>
+                            <span class="topics-item__status"><b class="topics-item__status--emphasis">12</b> / 345</span>
+                        </p>
+                        <p class="topics-item__inline-info">
+                            <time class="topics-item__public-time">两周前</time>
+                            <time class="topics-item__reply-time">1天前</time>
+                        </p>
+                    </div>
+                </div>
+            </li>
+            <li class="topics-item">
+                <h2 class="topics-item__title" title="置顶">饿了么大前端 Node.js 进阶教程</h2>
+                <div class="topics-item__info">
+                    <img class="topics-item__avatar" src="https://avatars3.githubusercontent.com/u/12249635?v=3&s=120" alt="用户头像">
+                    <div class="topics-item__info-wrapper">
+                        <p class="topics-item__inline-info">
+                            <span class="topics-item__name">chenBright</span>
+                            <span class="topics-item__status"><b class="topics-item__status--emphasis">12</b> / 345</span>
+                        </p>
+                        <p class="topics-item__inline-info">
+                            <time class="topics-item__public-time">两周前</time>
+                            <time class="topics-item__reply-time">1天前</time>
+                        </p>
+                    </div>
+                </div>
+            </li>
             <li class="topics-item">
                 <h2 class="topics-item__title" title="置顶">饿了么大前端 Node.js 进阶教程</h2>
                 <div class="topics-item__info">
@@ -102,8 +150,14 @@
 </template>
 
 <script>
+import BScroll from 'better-scroll';
+
 export default {
-    name: 'list'
+    name: 'list',
+    mounted() {
+        const scroll = new BScroll(this.$refs.scroll);
+        console.log(scroll);
+    }
 };
 </script>
 
