@@ -155,8 +155,7 @@ import BScroll from 'better-scroll';
 export default {
     name: 'list',
     mounted() {
-        const scroll = new BScroll(this.$refs.scroll);
-        console.log(scroll);
+        new BScroll(this.$refs.scroll);
     }
 };
 </script>

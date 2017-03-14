@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import index from '@/views/index';
 import list from '@/views/list';
+import login from '@/views/login';
 
 Vue.use(Router);
 
@@ -22,6 +23,12 @@ export default new Router({
     },
     {
         path: '/message',
-        name: 'message'
+        name: 'message',
+        redirect: '/login'
+    },
+    {
+        path: '/login',
+        name: 'login',
+        component: login
     }]
 });
