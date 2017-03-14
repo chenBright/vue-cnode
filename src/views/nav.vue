@@ -2,7 +2,7 @@
     <section class="el-nav">
         <el-header @clickMenuIcon="showMenu" :isShowMenu="isShowMenu"></el-header>
         <div class="page-shade" v-show="isShowMenu" v-tap.prevent="{ methods : hideMenu }"></div>
-        <el-menu :isShow="isShowMenu" @tapNav="hideMenu"></el-menu>
+        <el-menu :isShow="isShowMenu"></el-menu>
     </section>
 </template>
 
