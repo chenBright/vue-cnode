@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import userInfo from '@/components/user-info';
+import userInfo from './user-info';
 
 export default {
     name: 'el-menu',

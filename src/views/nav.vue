@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import header from '@/components/header';
-import menu from '@/components/menu';
+import header from '../components/header';
+import menu from '../components/menu';
 
 export default {
     name: 'el-nav',
@@ -20,6 +20,11 @@ export default {
         return {
             isShowMenu: false
         };
+    },
+    mounted() {
+        this.$events.on('routerChange', () => {
+            this.hideMenu();
+        });
     },
     methods: {
         showMenu() {
