@@ -38,6 +38,12 @@
                 </el-reply>
             </li>
         </ul>
+        <el-reply
+            v-if="isReply"
+            @replyConfirm="addReply"
+            @replyCancel="hideReply"
+        >
+        </el-reply>
     </article>
 </template>
 
