@@ -28,7 +28,6 @@ export default {
         color: #313131;
     }
     &__button {
-        display: inline-block;
         margin-top: 15px;
         width: 99%;
         height: 42px;

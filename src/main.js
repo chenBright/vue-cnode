@@ -19,11 +19,6 @@ Vue.use(EventBus);
 
 Vue.config.productionTip = false;
 
-// router.beforeEach((to, from, next) => {
-//     EventBus.emit('routerChange');
-//     next();
-// });
-
 new Vue({
     el: '#app',
     router,
