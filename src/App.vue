@@ -32,5 +32,6 @@ export default {
 .page {
     flex: 1;
     overflow: hidden;
+    text-align: left;
 }
 </style>

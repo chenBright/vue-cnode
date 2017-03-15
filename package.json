@@ -18,6 +18,7 @@
   ],
   "dependencies": {
     "axios": "^0.15.3",
+    "github-markdown-css": "^2.4.1",
     "v-tap": "^2.2.2",
     "vue": "^2.2.2",
     "vue-axios": "^2.0.1",
