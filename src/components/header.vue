@@ -9,7 +9,11 @@
             >
             </div>
             <h1 class="el-header__title">111</h1>
-            <div class="el-header__add-button iconfont icon-write"></div>
+            <router-link
+                class="el-header__add-button iconfont icon-write"
+                :to="{ name: 'newTopic' }"
+            >
+            </router-link>
         </header>
 </template>
 
