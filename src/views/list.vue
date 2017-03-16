@@ -1,5 +1,5 @@
 <template>
-    <section class="list" ref="scroll">
+    <section class="list">
         <ul>
             <li class="topics-item">
                 <h2 class="topics-item__title" title="置顶">饿了么大前端 Node.js 进阶教程</h2>
@@ -150,13 +150,8 @@
 </template>
 
 <script>
-import BScroll from 'better-scroll';
-
 export default {
     name: 'list',
-    mounted() {
-        new BScroll(this.$refs.scroll);
-    },
     beforeRouteUpdate(to, from, next) {
         this.$events.emit('routerChange');
         next();
@@ -170,7 +165,7 @@ export default {
 
 <style lang="scss" scoped>
 .list {
-    height: 100%;
+    // height: 100%;
 }
 .topics-item {
     padding: 10px 15px;
