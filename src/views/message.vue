@@ -4,7 +4,7 @@
             <li class="message__tab message__tab--br">最近回复</li>
             <li class="message__tab message__tab--active">最新发布</li>
         </ul>
-        <ul class="message-list">
+        <ul class="message-list" v-if="false">
             <li class="message-item">
                 <div class="message-item__info">
                     <img class="message-item__avatar" src="https://avatars3.githubusercontent.com/u/12249635?v=3&s=120" alt="用户头像">
@@ -21,12 +21,18 @@
                 </h2>
             </li>
         </ul>
+        <el-no-data></el-no-data>
     </section>
 </template>
 
 <script>
+import noData from '../components/no-data';
+
 export default {
-    name: 'message'
+    name: 'message',
+    components: {
+        'el-no-data': noData
+    }
 };
 </script>
 
@@ -92,5 +98,8 @@ export default {
         background-color: #f0f0f0;
         border-radius: 5px;
     }
+}
+.el-no-data {
+    margin-top: 15px;
 }
 </style>

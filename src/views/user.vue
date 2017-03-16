@@ -21,12 +21,18 @@
                 </li>
             </ul>
         </section>
+        <el-no-data></el-no-data>
     </section>
 </template>
 
 <script>
+import noData from '../components/no-data';
+
 export default {
     name: 'user',
+    components: {
+        'el-no-data': noData
+    },
     beforeRouteLeave(to, from, next) {
         this.$events.emit('routerChange');
         next();
@@ -113,5 +119,8 @@ export default {
         text-align: right;
         color: #80bd01;
     }
+}
+.el-no-data {
+    margin-top: 15px;
 }
 </style>
