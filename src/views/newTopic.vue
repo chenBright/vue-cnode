@@ -27,6 +27,10 @@
 
 <script>
 export default {
+    beforeRouteLeave(to, from, next) {
+        this.$events.emit('routerChange');
+        next();
+    }
 };
 </script>
 

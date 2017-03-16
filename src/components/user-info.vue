@@ -2,7 +2,7 @@
     <div class="user-info">
         <div class="user-info--unlogin iconfont icon-denglu" v-if="false">登录</div>
         <div class="user-info--login" v-else>
-            <img class="user-info__avertar" src="https://avatars3.githubusercontent.com/u/12249635?v=3&s=120" alt="用户头像">
+            <img class="user-info__avatar" src="https://avatars3.githubusercontent.com/u/12249635?v=3&s=120" alt="用户头像">
             <span class="user-info__name">chenBright</span>
             <span class="user-info__more iconfont icon-right"></span>
         </div>
@@ -30,7 +30,7 @@ export default {
             vertical-align: bottom;
         }
     }
-    &__avertar {
+    &__avatar {
         overflow: hidden;
         width: 40px;
         height: 40px;
