@@ -26,6 +26,7 @@
 
 <script>
 export default {
+    name: 'user',
     beforeRouteLeave(to, from, next) {
         this.$events.emit('routerChange');
         next();
