@@ -25,6 +25,7 @@ export default {
         this.$events.on('routerChange', () => {
             this.hideMenu();
         });
+        this.$store.dispatch('getList');
     },
     methods: {
         showMenu() {
