@@ -20,9 +20,6 @@
             <router-link class="nav-link iconfont icon-msg line" :to="{ 'name':'message' }">
                 消息
             </router-link>
-            <router-link class="nav-link iconfont icon-about" :to="{ 'name':'about' }">
-                关于
-            </router-link>
         </nav>
     </section>
 </template>
