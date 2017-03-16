@@ -71,6 +71,10 @@ export default {
         addReply(content) {
             console.log(content);
         }
+    },
+    beforeRouteLeave(to, from, next) {
+        this.$events.emit('routerChange');
+        next();
     }
 };
 </script>
@@ -135,7 +139,7 @@ export default {
         border-bottom: 1px solid #d4d4d4;
 
         &--emphasis {
-            color: #59ebff;
+            color: #80bd01;
         }
     }
 }

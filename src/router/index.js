@@ -5,6 +5,7 @@ import list from '../views/list';
 import topic from '../views/topic';
 import login from '../views/login';
 import newTopic from '../views/newTopic';
+import user from '../views/user';
 
 Vue.use(Router);
 
@@ -25,8 +26,9 @@ export default new Router({
         component: topic
     },
     {
-        path: '/about',
-        name: 'about'
+        path: '/user',
+        name: 'user',
+        component: user
     },
     {
         path: '/message',

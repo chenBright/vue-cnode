@@ -225,7 +225,7 @@ export default {
         text-align: left;
     }
     &__status--emphasis {
-        color: #59ebff;
+        color: #80bd01;
     }
 }
 </style>
