@@ -1,13 +1,10 @@
 <template>
     <section class="index">
         <img class="vue-logo" src="../assets/images/vue-logo.png">
-        <el-loading></el-loading>
     </section>
 </template>
 
 <script>
-import loading from '../components/loading';
-
 export default {
     name: 'index',
     components: {
