@@ -4,6 +4,7 @@ import index from '../views/index';
 import list from '../views/list';
 import topic from '../views/topic';
 import login from '../views/login';
+import newTopic from '../views/newTopic';
 
 Vue.use(Router);
 
@@ -36,5 +37,10 @@ export default new Router({
         path: '/login',
         name: 'login',
         component: login
+    },
+    {
+        path: '/newTopic',
+        name: 'newTopic',
+        component: newTopic
     }]
 });
