@@ -7,9 +7,6 @@
 <script>
 export default {
     name: 'index',
-    components: {
-        'el-loading': loading
-    },
     beforeRouteLeave(to, from, next) {
         this.$events.emit('routerChange');
         next();
