@@ -1,6 +1,7 @@
 <template>
-    <section class="list">
-        <ul>
+    <section class="list" :style="{ textAlign: !false ? 'center' : 'left' }">
+        <el-loading></el-loading>
+        <ul v-if="false">
             <li class="topics-item">
                 <h2 class="topics-item__title" title="置顶">饿了么大前端 Node.js 进阶教程</h2>
                 <div class="topics-item__info">
@@ -150,8 +151,13 @@
 </template>
 
 <script>
+import loading from '../components/loading';
+
 export default {
     name: 'list',
+    components: {
+        'el-loading': loading
+    },
     beforeRouteUpdate(to, from, next) {
         this.$events.emit('routerChange');
         next();
@@ -164,8 +170,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.list {
-    // height: 100%;
+.el-loading {
+    margin-top: 15px;
 }
 .topics-item {
     padding: 10px 15px;
