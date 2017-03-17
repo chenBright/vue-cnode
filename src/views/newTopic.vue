@@ -27,11 +27,7 @@
 
 <script>
 export default {
-    name: 'newTopic',
-    beforeRouteLeave(to, from, next) {
-        this.$events.emit('routerChange');
-        next();
-    }
+    name: 'newTopic'
 };
 </script>
 

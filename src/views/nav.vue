@@ -22,9 +22,6 @@ export default {
         };
     },
     mounted() {
-        this.$events.on('routerChange', () => {
-            this.hideMenu();
-        });
         this.$store.dispatch('getList');
     },
     methods: {
@@ -33,6 +30,13 @@ export default {
         },
         hideMenu() {
             this.isShowMenu = false;
+        }
+    },
+    watch: {
+        $route() {
+            if (this.isShowMenu) {
+                this.hideMenu();
+            }
         }
     }
 };

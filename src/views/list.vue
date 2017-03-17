@@ -57,15 +57,7 @@ export default {
         listLength() {
             return this.list.length;
         }
-    }),
-    beforeRouteUpdate(to, from, next) {
-        this.$events.emit('routerChange');
-        next();
-    },
-    beforeRouteLeave(to, from, next) {
-        this.$events.emit('routerChange');
-        next();
-    }
+    })
 };
 </script>
 

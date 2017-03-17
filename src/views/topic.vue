@@ -68,8 +68,7 @@ export default {
         hideReply() {
             this.isReply = false;
         },
-        addReply(content) {
-            console.log(content);
+        addReply() {
         }
     },
     beforeRouteLeave(to, from, next) {

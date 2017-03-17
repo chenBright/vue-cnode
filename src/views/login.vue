@@ -7,11 +7,7 @@
 
 <script>
 export default {
-    name: 'login',
-    beforeRouteLeave(to, from, next) {
-        this.$events.emit('routerChange');
-        next();
-    }
+    name: 'login'
 };
 </script>
 
