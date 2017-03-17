@@ -1,147 +1,40 @@
 <template>
-    <section class="list" :style="{ textAlign: !false ? 'center' : 'left' }">
-        <el-loading></el-loading>
-        <ul v-if="false">
-            <li class="topics-item">
-                <h2 class="topics-item__title" title="置顶">饿了么大前端 Node.js 进阶教程</h2>
+    <section class="list" :style="{ textAlign: listLength === 0 ? 'center' : 'left' }">
+        <el-loading v-if="listLength === 0"></el-loading>
+        <ul v-else>
+            <li class="topics-item" v-for="item of list">
+                <h2
+                    class="topics-item__title"
+                    :class="['topics-item__title--' + item.tab.type]"
+                    :title="item.tab.description"
+                >
+                    {{ item.title }}
+                </h2>
                 <div class="topics-item__info">
-                    <img class="topics-item__avatar" src="https://avatars3.githubusercontent.com/u/12249635?v=3&s=120" alt="用户头像">
+                    <img class="topics-item__avatar" :src="item.authorAvatar" alt="用户头像">
                     <div class="topics-item__info-wrapper">
                         <p class="topics-item__inline-info">
-                            <span class="topics-item__name">chenBright</span>
-                            <span class="topics-item__status"><b class="topics-item__status--emphasis">12</b> / 345</span>
+                            <span class="topics-item__name">{{ item.authorName }}</span>
+                            <span class="topics-item__status">
+                                <b class="topics-item__status--emphasis">{{ item.replyCount }}</b>
+                                 / {{ item.visitCount }}
+                            </span>
                         </p>
                         <p class="topics-item__inline-info">
-                            <time class="topics-item__public-time">两周前</time>
-                            <time class="topics-item__reply-time">1天前</time>
-                        </p>
-                    </div>
-                </div>
-            </li>
-            <li class="topics-item">
-                <h2 class="topics-item__title" title="置顶">饿了么大前端 Node.js 进阶教程</h2>
-                <div class="topics-item__info">
-                    <img class="topics-item__avatar" src="https://avatars3.githubusercontent.com/u/12249635?v=3&s=120" alt="用户头像">
-                    <div class="topics-item__info-wrapper">
-                        <p class="topics-item__inline-info">
-                            <span class="topics-item__name">chenBright</span>
-                            <span class="topics-item__status"><b class="topics-item__status--emphasis">12</b> / 345</span>
-                        </p>
-                        <p class="topics-item__inline-info">
-                            <time class="topics-item__public-time">两周前</time>
-                            <time class="topics-item__reply-time">1天前</time>
-                        </p>
-                    </div>
-                </div>
-            </li>
-            <li class="topics-item">
-                <h2 class="topics-item__title" title="置顶">饿了么大前端 Node.js 进阶教程</h2>
-                <div class="topics-item__info">
-                    <img class="topics-item__avatar" src="https://avatars3.githubusercontent.com/u/12249635?v=3&s=120" alt="用户头像">
-                    <div class="topics-item__info-wrapper">
-                        <p class="topics-item__inline-info">
-                            <span class="topics-item__name">chenBright</span>
-                            <span class="topics-item__status"><b class="topics-item__status--emphasis">12</b> / 345</span>
-                        </p>
-                        <p class="topics-item__inline-info">
-                            <time class="topics-item__public-time">两周前</time>
-                            <time class="topics-item__reply-time">1天前</time>
-                        </p>
-                    </div>
-                </div>
-            </li>
-            <li class="topics-item">
-                <h2 class="topics-item__title" title="置顶">饿了么大前端 Node.js 进阶教程</h2>
-                <div class="topics-item__info">
-                    <img class="topics-item__avatar" src="https://avatars3.githubusercontent.com/u/12249635?v=3&s=120" alt="用户头像">
-                    <div class="topics-item__info-wrapper">
-                        <p class="topics-item__inline-info">
-                            <span class="topics-item__name">chenBright</span>
-                            <span class="topics-item__status"><b class="topics-item__status--emphasis">12</b> / 345</span>
-                        </p>
-                        <p class="topics-item__inline-info">
-                            <time class="topics-item__public-time">两周前</time>
-                            <time class="topics-item__reply-time">1天前</time>
-                        </p>
-                    </div>
-                </div>
-            </li>
-            <li class="topics-item">
-                <h2 class="topics-item__title" title="置顶">饿了么大前端 Node.js 进阶教程</h2>
-                <div class="topics-item__info">
-                    <img class="topics-item__avatar" src="https://avatars3.githubusercontent.com/u/12249635?v=3&s=120" alt="用户头像">
-                    <div class="topics-item__info-wrapper">
-                        <p class="topics-item__inline-info">
-                            <span class="topics-item__name">chenBright</span>
-                            <span class="topics-item__status"><b class="topics-item__status--emphasis">12</b> / 345</span>
-                        </p>
-                        <p class="topics-item__inline-info">
-                            <time class="topics-item__public-time">两周前</time>
-                            <time class="topics-item__reply-time">1天前</time>
-                        </p>
-                    </div>
-                </div>
-            </li>
-            <li class="topics-item">
-                <h2 class="topics-item__title" title="置顶">饿了么大前端 Node.js 进阶教程</h2>
-                <div class="topics-item__info">
-                    <img class="topics-item__avatar" src="https://avatars3.githubusercontent.com/u/12249635?v=3&s=120" alt="用户头像">
-                    <div class="topics-item__info-wrapper">
-                        <p class="topics-item__inline-info">
-                            <span class="topics-item__name">chenBright</span>
-                            <span class="topics-item__status"><b class="topics-item__status--emphasis">12</b> / 345</span>
-                        </p>
-                        <p class="topics-item__inline-info">
-                            <time class="topics-item__public-time">两周前</time>
-                            <time class="topics-item__reply-time">1天前</time>
-                        </p>
-                    </div>
-                </div>
-            </li>
-            <li class="topics-item">
-                <h2 class="topics-item__title" title="置顶">饿了么大前端 Node.js 进阶教程</h2>
-                <div class="topics-item__info">
-                    <img class="topics-item__avatar" src="https://avatars3.githubusercontent.com/u/12249635?v=3&s=120" alt="用户头像">
-                    <div class="topics-item__info-wrapper">
-                        <p class="topics-item__inline-info">
-                            <span class="topics-item__name">chenBright</span>
-                            <span class="topics-item__status"><b class="topics-item__status--emphasis">12</b> / 345</span>
-                        </p>
-                        <p class="topics-item__inline-info">
-                            <time class="topics-item__public-time">两周前</time>
-                            <time class="topics-item__reply-time">1天前</time>
-                        </p>
-                    </div>
-                </div>
-            </li>
-            <li class="topics-item">
-                <h2 class="topics-item__title" title="置顶">饿了么大前端 Node.js 进阶教程</h2>
-                <div class="topics-item__info">
-                    <img class="topics-item__avatar" src="https://avatars3.githubusercontent.com/u/12249635?v=3&s=120" alt="用户头像">
-                    <div class="topics-item__info-wrapper">
-                        <p class="topics-item__inline-info">
-                            <span class="topics-item__name">chenBright</span>
-                            <span class="topics-item__status"><b class="topics-item__status--emphasis">12</b> / 345</span>
-                        </p>
-                        <p class="topics-item__inline-info">
-                            <time class="topics-item__public-time">两周前</time>
-                            <time class="topics-item__reply-time">1天前</time>
-                        </p>
-                    </div>
-                </div>
-            </li>
-            <li class="topics-item">
-                <h2 class="topics-item__title" title="置顶">饿了么大前端 Node.js 进阶教程</h2>
-                <div class="topics-item__info">
-                    <img class="topics-item__avatar" src="https://avatars3.githubusercontent.com/u/12249635?v=3&s=120" alt="用户头像">
-                    <div class="topics-item__info-wrapper">
-                        <p class="topics-item__inline-info">
-                            <span class="topics-item__name">chenBright</span>
-                            <span class="topics-item__status"><b class="topics-item__status--emphasis">12</b> / 345</span>
-                        </p>
-                        <p class="topics-item__inline-info">
-                            <time class="topics-item__public-time">两周前</time>
-                            <time class="topics-item__reply-time">1天前</time>
+                            <timeago
+                                class="topics-item__public-time"
+                                :since="item.createTime"
+                                :max-time="86400 * 365 * 10"
+                                :auto-update="60 * 5"
+                            >
+                            </timeago>
+                            <timeago
+                                class="topics-item__reply-time"
+                                :since="item.lastReplyTime"
+                                :max-time="86400 * 365 * 10"
+                                :auto-update="60 * 5"
+                            >
+                            </timeago>
                         </p>
                     </div>
                 </div>
@@ -151,6 +44,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import loading from '../components/loading';
 
 export default {
@@ -158,6 +52,12 @@ export default {
     components: {
         'el-loading': loading
     },
+    computed: mapState({
+        list: state => state.list.list,
+        listLength() {
+            return this.list.length;
+        }
+    }),
     beforeRouteUpdate(to, from, next) {
         this.$events.emit('routerChange');
         next();
@@ -178,9 +78,13 @@ export default {
     border-bottom: 1px solid #d5dbdb;
 
     &__title {
+        width: 100%;
         color: #2c3e50;
         font-size: 16px;
         line-height: 1.5;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
 
         &::before {
             padding: 5px 6px;
@@ -190,8 +94,23 @@ export default {
             font-size: 10px;
             border-radius: 4px;
             color: #ffffff;
-            background-color: #e7e7e7;
+            background: #e7e7e7;
             vertical-align: text-top;
+        }
+        &--good::before {
+            background: #E67E22;
+        }
+        &--top::before {
+            background: #E74C3C;
+        }
+        &--share::before {
+            background: #1ABC9C;
+        }
+        &--ask::before {
+            background: #3498DB;
+        }
+        &--job::before {
+            background: #9B59B6;
         }
     }
     &__info {

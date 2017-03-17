@@ -2,8 +2,8 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import vueTap from 'v-tap';
-import axios from 'axios';
-import VueAxios from 'vue-axios';
+import VueTimeago from 'vue-timeago';
+import timeageLocale from 'vue-timeago/locales/zh-CN.json';
 
 import App from './App';
 import router from './router';
@@ -18,7 +18,13 @@ import './assets/scss/common/common.scss';
 
 // 安装插件
 Vue.use(vueTap);
-Vue.use(VueAxios, axios);
+Vue.use(VueTimeago, {
+    name: 'timeago',
+    locale: 'zh-CN',
+    locales: {
+        'zh-CN': timeageLocale
+    }
+});
 Vue.use(EventBus);
 
 Vue.config.productionTip = false;
