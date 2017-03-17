@@ -8,6 +8,7 @@ import timeageLocale from 'vue-timeago/locales/zh-CN.json';
 import App from './App';
 import router from './router';
 import EventBus from './plugins/event-bus';
+import VueScroll from './plugins/vue-scroll';
 import store from './vuex/store';
 
 
@@ -26,6 +27,7 @@ Vue.use(VueTimeago, {
     }
 });
 Vue.use(EventBus);
+Vue.use(VueScroll);
 
 Vue.config.productionTip = false;
 

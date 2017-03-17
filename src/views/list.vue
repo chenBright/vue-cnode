@@ -1,5 +1,5 @@
 <template>
-    <section class="list" :style="{ textAlign: listLength === 0 ? 'center' : 'left' }">
+    <section class="list" :style="{ textAlign: listLength === 0 ? 'center' : 'left' }" v-scroll>
         <el-loading v-if="listLength === 0"></el-loading>
         <ul v-else>
             <li class="topics-item" v-for="item of list">
@@ -52,16 +52,29 @@ export default {
     components: {
         'el-loading': loading
     },
+    data() {
+        return {
+            scroller: null
+        };
+    },
+    mounted() {
+        this.$store.dispatch('getList');
+    },
     computed: mapState({
         list: state => state.list.list,
         listLength() {
             return this.list.length;
         }
-    })
+    }),
+    methods: {
+    }
 };
 </script>
 
 <style lang="scss" scoped>
+.list {
+    height: 100%;
+}
 .el-loading {
     margin-top: 15px;
 }

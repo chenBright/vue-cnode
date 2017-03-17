@@ -21,9 +21,6 @@ export default {
             isShowMenu: false
         };
     },
-    mounted() {
-        this.$store.dispatch('getList');
-    },
     methods: {
         showMenu() {
             this.isShowMenu = true;

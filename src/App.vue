@@ -1,34 +1,19 @@
 <template>
     <div id="app">
         <el-nav></el-nav>
-        <section class="page" ref="scroll">
+        <section class="page">
             <router-view></router-view>
         </section>
     </div>
 </template>
 
 <script>
-import BScroll from 'better-scroll';
 import nav from './views/nav';
 
 export default {
     name: 'app',
     components: {
         'el-nav': nav
-    },
-    data() {
-        return {
-            scrollObj: null
-        };
-    },
-    mounted() {
-        this.scrollObj = new BScroll(this.$refs.scroll);
-    },
-    beforeUpdate() {
-        this.scrollObj = null;
-    },
-    updated() {
-        this.scrollObj = new BScroll(this.$refs.scroll);
     }
 };
 </script>
