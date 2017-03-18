@@ -26,12 +26,12 @@ const list = {
                     item.tab = 'top';
                 }
                 const handledItem = {
+                    id: item.id,
                     title: item.title,
                     tab: {
                         type: item.tab,
                         description: tabMap[item.tab]
                     },
-                    authorId: item.author_id,
                     authorName: item.author.loginname,
                     authorAvatar: item.author.avatar_url,
                     createTime: item.create_at,

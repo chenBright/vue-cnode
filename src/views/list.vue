@@ -5,48 +5,49 @@
         v-scroll="{
             method: loadList,
             enableCallback: enableLoad,
-            instance: 100,
-            postionY: postionY
+            instance: 100
         }"
     >
         <section>
             <ul v-if="listLength !== 0" ref="ul">
-                <li class="topics-item" v-for="item of list" :key="item.authorId + item.createTime">
-                    <h2
-                        class="topics-item__title"
-                        :class="['topics-item__title--' + item.tab.type]"
-                        :title="item.tab.description"
-                    >
-                        {{ item.title }}
-                    </h2>
-                    <div class="topics-item__info">
-                        <img class="topics-item__avatar" :src="item.authorAvatar" alt="用户头像">
-                        <div class="topics-item__info-wrapper">
-                            <p class="topics-item__inline-info">
-                                <span class="topics-item__name">{{ item.authorName }}</span>
-                                <span class="topics-item__status">
-                                    <b class="topics-item__status--emphasis">{{ item.replyCount }}</b>
-                                     / {{ item.visitCount }}
-                                </span>
-                            </p>
-                            <p class="topics-item__inline-info">
-                                <timeago
-                                    class="topics-item__public-time"
-                                    :since="item.createTime"
-                                    :max-time="86400 * 365 * 10"
-                                    :auto-update="60 * 5"
-                                >
-                                </timeago>
-                                <timeago
-                                    class="topics-item__reply-time"
-                                    :since="item.lastReplyTime"
-                                    :max-time="86400 * 365 * 10"
-                                    :auto-update="60 * 5"
-                                >
-                                </timeago>
-                            </p>
+                <li class="topics-item" v-for="item of list" :key="item.id">
+                    <router-link :to="{name:'topic', params:{ id: item.id } }">
+                        <h2
+                            class="topics-item__title"
+                            :class="['topics-item__title--' + item.tab.type]"
+                            :title="item.tab.description"
+                        >
+                            {{ item.title }}
+                        </h2>
+                        <div class="topics-item__info">
+                            <img class="topics-item__avatar" :src="item.authorAvatar" alt="用户头像">
+                            <div class="topics-item__info-wrapper">
+                                <p class="topics-item__inline-info">
+                                    <span class="topics-item__name">{{ item.authorName }}</span>
+                                    <span class="topics-item__status">
+                                        <b class="topics-item__status--emphasis">{{ item.replyCount }}</b>
+                                         / {{ item.visitCount }}
+                                    </span>
+                                </p>
+                                <p class="topics-item__inline-info">
+                                    <timeago
+                                        class="topics-item__public-time"
+                                        :since="item.createTime"
+                                        :max-time="86400 * 365 * 10"
+                                        :auto-update="60 * 5"
+                                    >
+                                    </timeago>
+                                    <timeago
+                                        class="topics-item__reply-time"
+                                        :since="item.lastReplyTime"
+                                        :max-time="86400 * 365 * 10"
+                                        :auto-update="60 * 5"
+                                    >
+                                    </timeago>
+                                </p>
+                            </div>
                         </div>
-                    </div>
+                    </router-link>
                 </li>
             </ul>
         </section>
@@ -67,7 +68,7 @@ export default {
         return {
             // 是否可以执行滚动回调函数
             enableLoad: true,
-            postionY: 0,
+            // postionY: 0,
             // 页数
             page: 1
         };
