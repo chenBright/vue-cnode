@@ -1,6 +1,7 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
+import { sync } from 'vuex-router-sync';
 import vueTap from 'v-tap';
 import VueTimeago from 'vue-timeago';
 import timeageLocale from 'vue-timeago/locales/zh-CN.json';
@@ -28,6 +29,8 @@ Vue.use(VueTimeago, {
 });
 Vue.use(EventBus);
 Vue.use(VueScroll);
+
+sync(store, router);
 
 Vue.config.productionTip = false;
 

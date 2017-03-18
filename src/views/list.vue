@@ -1,45 +1,56 @@
 <template>
-    <section class="list" :style="{ textAlign: listLength === 0 ? 'center' : 'left' }" v-scroll>
-        <el-loading v-if="listLength === 0"></el-loading>
-        <ul v-else>
-            <li class="topics-item" v-for="item of list">
-                <h2
-                    class="topics-item__title"
-                    :class="['topics-item__title--' + item.tab.type]"
-                    :title="item.tab.description"
-                >
-                    {{ item.title }}
-                </h2>
-                <div class="topics-item__info">
-                    <img class="topics-item__avatar" :src="item.authorAvatar" alt="用户头像">
-                    <div class="topics-item__info-wrapper">
-                        <p class="topics-item__inline-info">
-                            <span class="topics-item__name">{{ item.authorName }}</span>
-                            <span class="topics-item__status">
-                                <b class="topics-item__status--emphasis">{{ item.replyCount }}</b>
-                                 / {{ item.visitCount }}
-                            </span>
-                        </p>
-                        <p class="topics-item__inline-info">
-                            <timeago
-                                class="topics-item__public-time"
-                                :since="item.createTime"
-                                :max-time="86400 * 365 * 10"
-                                :auto-update="60 * 5"
-                            >
-                            </timeago>
-                            <timeago
-                                class="topics-item__reply-time"
-                                :since="item.lastReplyTime"
-                                :max-time="86400 * 365 * 10"
-                                :auto-update="60 * 5"
-                            >
-                            </timeago>
-                        </p>
+    <section
+        class="list"
+        :style="{ textAlign: listLength === 0 ? 'center' : 'left' }"
+        v-scroll="{
+            method: loadList,
+            enableCallback: enableLoad,
+            instance: 100,
+            postionY: postionY
+        }"
+    >
+        <section>
+            <ul v-if="listLength !== 0" ref="ul">
+                <li class="topics-item" v-for="item of list" :key="item.authorId + item.createTime">
+                    <h2
+                        class="topics-item__title"
+                        :class="['topics-item__title--' + item.tab.type]"
+                        :title="item.tab.description"
+                    >
+                        {{ item.title }}
+                    </h2>
+                    <div class="topics-item__info">
+                        <img class="topics-item__avatar" :src="item.authorAvatar" alt="用户头像">
+                        <div class="topics-item__info-wrapper">
+                            <p class="topics-item__inline-info">
+                                <span class="topics-item__name">{{ item.authorName }}</span>
+                                <span class="topics-item__status">
+                                    <b class="topics-item__status--emphasis">{{ item.replyCount }}</b>
+                                     / {{ item.visitCount }}
+                                </span>
+                            </p>
+                            <p class="topics-item__inline-info">
+                                <timeago
+                                    class="topics-item__public-time"
+                                    :since="item.createTime"
+                                    :max-time="86400 * 365 * 10"
+                                    :auto-update="60 * 5"
+                                >
+                                </timeago>
+                                <timeago
+                                    class="topics-item__reply-time"
+                                    :since="item.lastReplyTime"
+                                    :max-time="86400 * 365 * 10"
+                                    :auto-update="60 * 5"
+                                >
+                                </timeago>
+                            </p>
+                        </div>
                     </div>
-                </div>
-            </li>
-        </ul>
+                </li>
+            </ul>
+        </section>
+        <el-loading v-if="listLength === 0"></el-loading>
     </section>
 </template>
 
@@ -54,19 +65,52 @@ export default {
     },
     data() {
         return {
-            scroller: null
+            // 是否可以执行滚动回调函数
+            enableLoad: true,
+            postionY: 0,
+            // 页数
+            page: 1
         };
     },
     mounted() {
-        this.$store.dispatch('getList');
+        this.enableLoad = false;
+        this.getTopicsList();
     },
     computed: mapState({
         list: state => state.list.list,
+        route(state) {
+            return state.route;
+        },
         listLength() {
             return this.list.length;
         }
     }),
     methods: {
+        loadList() {
+            this.enableLoad = false;
+            this.page += 1;
+            this.getTopicsList();
+        },
+        reloadList() {
+            this.$store.dispatch('resetList');
+            this.page = 1;
+            this.getTopicsList();
+        },
+        getTopicsList() {
+            this.$store.dispatch('getList', {
+                page: this.page,
+                tab: this.$route.query.tab
+            });
+        }
+    },
+    watch: {
+        // 当列表数组变化时，即更新了列表，则可以执行滚动回调函数
+        listLength() {
+            this.enableLoad = true;
+        },
+        $route() {
+            this.reloadList();
+        }
     }
 };
 </script>
