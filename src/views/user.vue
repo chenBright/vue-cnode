@@ -32,10 +32,6 @@ export default {
     name: 'user',
     components: {
         'el-no-data': noData
-    },
-    beforeRouteLeave(to, from, next) {
-        this.$events.emit('routerChange');
-        next();
     }
 };
 </script>

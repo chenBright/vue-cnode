@@ -21,10 +21,10 @@
     "github-markdown-css": "^2.4.1",
     "v-tap": "^2.2.2",
     "vue": "^2.2.2",
-    "vue-axios": "^2.0.1",
     "vue-router": "^2.2.0",
     "vue-timeago": "^3.3.0",
-    "vuex": "^2.2.1"
+    "vuex": "^2.2.1",
+    "vuex-router-sync": "^4.1.2"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",

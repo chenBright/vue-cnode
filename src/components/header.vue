@@ -8,7 +8,7 @@
                 v-tap.prevent="{ methods : showMenu }"
             >
             </div>
-            <h1 class="el-header__title">111</h1>
+            <h1 class="el-header__title">{{ title }}</h1>
             <router-link
                 class="el-header__add-button iconfont icon-write"
                 :to="{ name: 'newTopic' }"
@@ -21,6 +21,10 @@
 export default {
     name: 'el-header',
     props: {
+        title: {
+            type: String,
+            default: '首页'
+        },
         isShowMenu: {
             type: Boolean,
             default: false

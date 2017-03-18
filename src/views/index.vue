@@ -6,11 +6,7 @@
 
 <script>
 export default {
-    name: 'index',
-    beforeRouteLeave(to, from, next) {
-        this.$events.emit('routerChange');
-        next();
-    }
+    name: 'index'
 };
 </script>
 
