@@ -14,36 +14,62 @@ export default new Router({
     mode: 'history',
     routes: [{
         path: '/',
-        component: index
+        component: index,
+        meta: {
+            appTitle: '首页'
+        }
     },
     {
         path: '/list',
         name: 'list',
-        component: list
+        component: list,
+        meta: {
+            appTitle: {
+                all: '全部',
+                good: '精华',
+                ask: '问答',
+                job: '招聘'
+            }
+        }
     },
     {
         path: '/topic',
         name: 'topic',
-        component: topic
+        component: topic,
+        meta: {
+            appTitle: '主题'
+        }
     },
     {
         path: '/user',
         name: 'user',
-        component: user
+        component: user,
+        meta: {
+            appTitle: '用户信息'
+        }
     },
     {
         path: '/message',
         name: 'message',
-        component: message
+        component: message,
+        meta: {
+            appTitle: '消息'
+        }
     },
     {
         path: '/login',
         name: 'login',
-        component: login
+        component: login,
+        meta: {
+            appTitle: '登录'
+        }
     },
     {
         path: '/newTopic',
         name: 'newTopic',
-        component: newTopic
+        component: newTopic,
+        meta: {
+            appTitle: '新增主题'
+        }
     }]
 });

@@ -5,13 +5,13 @@
         v-scroll="{
             method: loadList,
             enableCallback: enableLoad,
-            instance: 100
+            instance: 300
         }"
     >
         <section>
             <ul v-if="listLength !== 0" ref="ul">
                 <li class="topics-item" v-for="item of list" :key="item.id">
-                    <router-link :to="{name:'topic', params:{ id: item.id } }">
+                    <router-link :to="{name:'topic', params:{ id: item.id } }" events="'touchend'">
                         <h2
                             class="topics-item__title"
                             :class="['topics-item__title--' + item.tab.type]"
@@ -70,37 +70,42 @@ export default {
             enableLoad: true,
             // postionY: 0,
             // 页数
-            page: 1
+            page: 0
         };
     },
     mounted() {
-        this.enableLoad = false;
-        this.getTopicsList();
+        this.loadList();
     },
     computed: mapState({
+        // 列表数据
         list: state => state.list.list,
-        route(state) {
-            return state.route;
+        // 路由信息
+        tab(state) {
+            return state.route.query.tab;
         },
+        // 列表长度
         listLength() {
             return this.list.length;
         }
     }),
     methods: {
+        // 获取列表数据
         loadList() {
             this.enableLoad = false;
             this.page += 1;
             this.getTopicsList();
         },
+        // 重置列表，加载第一页数据
         reloadList() {
             this.$store.dispatch('resetList');
             this.page = 1;
             this.getTopicsList();
         },
+        // 获取列表数据
         getTopicsList() {
             this.$store.dispatch('getList', {
                 page: this.page,
-                tab: this.$route.query.tab
+                tab: this.tab
             });
         }
     },
@@ -109,6 +114,7 @@ export default {
         listLength() {
             this.enableLoad = true;
         },
+        // 切换页面时，重置列表，加载第一页数据
         $route() {
             this.reloadList();
         }
