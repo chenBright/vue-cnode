@@ -3,17 +3,17 @@ import ajax from './ajax';
 const user = {
     state: {
         userInfo: {
-            authorName: '',
-            authorAvatar: '',
-            authorId: ''
+            userName: '',
+            userAvatar: '',
+            userId: ''
         }
     },
     mutations: {
         SET_USER_INFO(state, userInfo) {
             state.userInfo = {
-                authorName: userInfo.loginname,
-                authorAvatar: userInfo.avatar_url,
-                authorId: userInfo.id
+                userName: userInfo.loginname,
+                userAvatar: userInfo.avatar_url,
+                userId: userInfo.id
             };
         }
     },

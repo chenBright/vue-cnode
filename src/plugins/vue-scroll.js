@@ -1,5 +1,3 @@
-/* eslint no-console : "off" */
-
 import BScroll from 'better-scroll';
 // 滚动设置数组
 const scrolls = [];

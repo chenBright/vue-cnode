@@ -7,6 +7,8 @@
 
 <script>
 /* eslint no-alert: "off" */
+import { mapState } from 'vuex';
+
 export default {
     name: 'login',
     data() {
@@ -14,12 +16,26 @@ export default {
             token: '946b1563-10f4-4027-b757-4590d315c28e'
         };
     },
+    computed: mapState({
+        // 用户数据
+        userInfo: state => state.userInfo.userInfo
+    }),
     methods: {
         login() {
             if (this.token.length !== 36) {
                 alert('令牌格式错误,应为36位UUID字符串');
             } else {
                 this.$store.dispatch('login', { token: this.token });
+            }
+        }
+    },
+    watch: {
+        userInfo(newValue) {
+            if (newValue.userId) {
+                const redirect = decodeURIComponent(this.$route.query.redirect || '/');
+                this.$router.push({
+                    path: redirect
+                });
             }
         }
     }
