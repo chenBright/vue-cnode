@@ -1,13 +1,28 @@
 <template>
     <section class="login">
-        <input class="login__input" type="text" placeholder="Access Token">
-        <button class="login__button" type="button">登录</button>
+        <input class="login__input" type="text" placeholder="Access Token" v-model="token">
+        <button class="login__button" type="button" v-tap.prevent="{ methods: login }">登录</button>
     </section>
 </template>
 
 <script>
+/* eslint no-alert: "off" */
 export default {
-    name: 'login'
+    name: 'login',
+    data() {
+        return {
+            token: '946b1563-10f4-4027-b757-4590d315c28e'
+        };
+    },
+    methods: {
+        login() {
+            if (this.token.length !== 36) {
+                alert('令牌格式错误,应为36位UUID字符串');
+            } else {
+                this.$store.dispatch('login', { token: this.token });
+            }
+        }
+    }
 };
 </script>
 

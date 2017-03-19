@@ -1,16 +1,37 @@
 <template>
     <div class="user-info">
-        <div class="user-info--unlogin iconfont icon-denglu" v-if="false">登录</div>
-        <div class="user-info--login" v-else>
-            <img class="user-info__avatar" src="https://avatars3.githubusercontent.com/u/12249635?v=3&s=120" alt="用户头像">
-            <span class="user-info__name">chenBright</span>
+        <div
+            class="user-info--unlogin iconfont icon-denglu"
+            v-tap.prevent="{ methods: login }"
+            v-if="!user.authorId"
+        >
+            登录
+        </div>
+        <div class="user-info--login" v-tap.prevent="{ methods: toUser }" v-else>
+            <img class="user-info__avatar" :src="user.authorAvatar" alt="用户头像">
+            <span class="user-info__name">{{ user.authorName }}</span>
             <span class="user-info__more iconfont icon-right"></span>
         </div>
     </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
+    name: 'user-info',
+    computed: mapState({
+        // 列表数据
+        user: state => state.user.userInfo,
+    }),
+    methods: {
+        login() {
+            this.$router.push({ name: 'login' });
+        },
+        toUser() {
+            this.$router.push({ name: 'user' });
+        }
+    }
 };
 </script>
 
