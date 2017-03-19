@@ -1,4 +1,4 @@
-import ajax from './ajaxInstance';
+import ajax from './ajax';
 
 const tabMap = {
     share: '分享',

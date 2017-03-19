@@ -22,7 +22,7 @@ export default {
     name: 'user-info',
     computed: mapState({
         // 用户信息
-        user: state => state.user.userInfo,
+        user: state => state.userInfo.userInfo,
     }),
     methods: {
         login() {
