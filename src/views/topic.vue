@@ -76,7 +76,7 @@
                 </el-reply>
             </template>
         </section>
-        <el-loading v-if="false"></el-loading>
+        <el-loading v-if="topic.title === ''"></el-loading>
     </article>
 </template>
 
