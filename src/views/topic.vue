@@ -63,7 +63,7 @@
                                 </span>
                             </span>
                         </div>
-                        <div class="reply-item__content" v-html="reply.content"></div>
+                        <div class="markdown-body reply-item__content" v-html="reply.content"></div>
                         <el-reply
                             :user="`@${reply.authorName} `"
                             v-if="reply.id === currentId"

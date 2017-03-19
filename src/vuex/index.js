@@ -4,6 +4,7 @@ import list from './list';
 import topic from './topic';
 import userInfo from './user-info';
 import userDetail from './user-detail';
+import messages from './messages';
 
 Vue.use(Vuex);
 
@@ -12,7 +13,8 @@ const store = new Vuex.Store({
         list,
         topic,
         userInfo,
-        userDetail
+        userDetail,
+        messages
     }
 });
 
