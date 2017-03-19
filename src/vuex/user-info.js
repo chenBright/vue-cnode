@@ -5,7 +5,8 @@ const user = {
         userInfo: {
             userName: '',
             userAvatar: '',
-            userId: ''
+            userId: '',
+            token: ''
         }
     },
     mutations: {
@@ -13,7 +14,8 @@ const user = {
             state.userInfo = {
                 userName: userInfo.loginname,
                 userAvatar: userInfo.avatar_url,
-                userId: userInfo.id
+                userId: userInfo.id,
+                token: userInfo.token
             };
         }
     },
@@ -25,6 +27,7 @@ const user = {
             .then((result) => {
                 const data = result.data;
                 if (data.success) {
+                    data.token = token;
                     window.sessionStorage.user = JSON.stringify(data);
                     dispatch('setUserInfo', data);
                 }

@@ -1,61 +1,70 @@
 <template>
-    <section class="message">
-        <ul class="message__tabs">
-            <li class="message__tab message__tab--br">最近回复</li>
-            <li class="message__tab message__tab--active">最新发布</li>
-        </ul>
-        <ul class="message-list" v-if="false">
-            <li class="message-item">
+    <section
+        class="message"
+        v-scroll="{
+            enableCallback: true
+        }"
+    >
+        <ul class="message-list" v-show="messages.length !== 0">
+            <li class="message-item" v-for="message of messages" :key="message.replyId">
                 <div class="message-item__info">
-                    <img class="message-item__avatar" src="https://avatars3.githubusercontent.com/u/12249635?v=3&s=120" alt="用户头像">
+                    <router-link :to="{ name: 'user', params: { userName: message.authorName } }" events="'touchend'">
+                        <img class="message-item__avatar" :src="message.authorAvatar" alt="用户头像">
+                    </router-link>
                     <span class="message-item__tips">
-                        <span>chenBright</span>
-                        <span v-if="true">在回复中@了您</span>
+                        <span>{{ message.authorName }}</span>
+                        <span v-if="message.type === 'reply'">在回复中@了您</span>
                         <span v-else>回复了您的话题</span>
                     </span>
-                    <span class="message-item__time">1天前</span>
+                    <timeago
+                        class="message-item__time"
+                        :since="message.replyTime"
+                        :max-time="86400 * 365 * 10"
+                        :auto-update="60 * 5"
+                    >
+                    </timeago>
                 </div>
-                <div class="message-item__reply"></div>
-                <h2 class="message-item__title">
-                    话题：nodejs有哪些好用的mvc框架？
-                </h2>
+                <div class="markdown-body message-item__reply" v-html="message.content"></div>
+                <router-link :to="{name:'topic', params:{ id: message.topicId } }" events="'touchend'">
+                    <h2 class="message-item__title">{{ message.title }}</h2>
+                </router-link>
             </li>
         </ul>
-        <el-no-data></el-no-data>
+        <el-no-data v-if="messages.length === 0"></el-no-data>
     </section>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+import loading from '../components/loading';
 import noData from '../components/no-data';
 
 export default {
     name: 'message',
     components: {
+        'el-loading': loading,
         'el-no-data': noData
+    },
+    computed: mapState({
+        // 用户信息
+        userInfo: state => state.userInfo.userInfo,
+        // 消息信息
+        messages: state => state.messages.messages
+    }),
+    created() {
+        this.$store.dispatch('getMessage', {
+            token: this.userInfo.token
+        });
     }
 };
 </script>
 
 <style lang="scss" scoped>
 .message {
+    height: 100%;
+
     &__tabs {
         display: flex;
-    }
-    &__tab {
-        flex: 1;
-        text-align: center;
-        padding: 12.5px 0;
-        font-size: 16px;
-        font-weight: bold;
-        border-bottom: 1px solid #d4d4d4;
-
-        &--active {
-            color: #ff5a5f;
-            border-bottom: 2px solid #ff5a5f;
-        }
-        &--br {
-            border-right: 1px solid #d4d4d4;
-        }
     }
 }
 .message-item {
@@ -64,7 +73,6 @@ export default {
 
     &__info {
         display: inline-flex;
-        margin-bottom: 15px;
         width: 100%;
     }
     &__avatar {
@@ -79,6 +87,7 @@ export default {
     }
     &__tips {
         flex: 1;
+        font-size: 14px;
         color: #626262;
     }
     &__time {
@@ -89,6 +98,7 @@ export default {
     }
     &__reply {
         margin-bottom: 15px;
+        word-break: break-word;
     }
     &__title {
         padding: 5px;
