@@ -1,36 +1,36 @@
 <template>
-    <section class="user">
-        <section class="user__info">
-            <img class="user__avatar" :src="userInfo.authorAvatar" alt="用户头像">
-            <p class="user__name">{{ userInfo.authorName }}</p>
-            <p class="user__score">积分：{{ userDetail.score }}</p>
-        </section>
-        <section class="topics">
-            <ul class="topics__tabs">
-                <li
-                    class="topics__tab topics__tab--br"
-                    :class="{ 'topics__tab--active': tabType === 1 }"
-                    v-tap.prevent="{ methods: toggleTab, type: 1 }"
-                >
-                    最近回复
-                </li>
-                <li
-                    class="topics__tab"
-                    :class="{ 'topics__tab--active': tabType === 2 }"
-                    v-tap.prevent="{ methods: toggleTab, type: 2 }"
-                >
-                    最新发布
-                </li>
-            </ul>
-            <section
-                v-scroll="{
-                    enableCallback: true,
-                    instance: 300
-                }"
-            >
+    <section
+        class="user"
+        v-scroll="{
+            enableCallback: true
+        }"
+    >
+        <section v-show="userDetail.authorId !== ''">
+            <section class="user__info">
+                <img class="user__avatar" :src="userDetail.authorAvatar" alt="用户头像">
+                <p class="user__name">{{ userDetail.authorName }}</p>
+                <p class="user__score">积分：{{ userDetail.score }}</p>
+            </section>
+            <section class="topics">
+                <ul class="topics__tabs">
+                    <li
+                        class="topics__tab topics__tab--br"
+                        :class="{ 'topics__tab--active': tabType === 1 }"
+                        v-tap.prevent="{ methods: toggleTab, type: 1 }"
+                    >
+                        最近回复
+                    </li>
+                    <li
+                        class="topics__tab"
+                        :class="{ 'topics__tab--active': tabType === 2 }"
+                        v-tap.prevent="{ methods: toggleTab, type: 2 }"
+                    >
+                        最新发布
+                    </li>
+                </ul>
                 <ul class="topics__list">
                     <li class="topic-item" v-for="userItem of topicsList" :key="userItem.id">
-                        <router-link :to="{ name: 'user', params: { loginName: userItem.authorName } }" events="'touchend'">
+                        <router-link :to="{ name: 'user', params: { userName: userItem.authorName } }" events="'touchend'">
                             <img class="topic-item__avatar" :src="userItem.authorAvatar" alt="用户头像">
                         </router-link>
                         <router-link
@@ -38,7 +38,6 @@
                             :to="{ name:'topic', params:{ id: userItem.id } }"
                             events="'touchend'"
                         >
-                            <!-- <section class="topic-item__info"> -->
                                 <h2 class="topic-item__title">{{ userItem.title }}</h2>
                                 <span class="topic-item__author">{{ userItem.authorName }}</span>
                                 <timeago
@@ -48,14 +47,13 @@
                                     :auto-update="60 * 5"
                                 >
                                 </timeago>
-                            <!-- </section> -->
                         </router-link>
                     </li>
                 </ul>
                 <el-no-data v-if="topicsList.length === 0"></el-no-data>
             </section>
         </section>
-        <el-loading v-if="false"></el-loading>
+        <el-loading  v-if="userDetail.authorId === ''"></el-loading>
     </section>
 </template>
 
@@ -77,16 +75,14 @@ export default {
         };
     },
     computed: mapState({
-        // 列表数据
-        userInfo: state => state.user.userInfo,
         userDetail(state) {
-            const userDetail = state.user.userDetail;
+            const userDetail = state.userDetail.userDetail;
             this.topicsList = userDetail.recentReplies;
             return userDetail;
         }
     }),
-    beforeCreate() {
-        this.$store.dispatch('getUserDetail', { loginName: this.$route.params.loginName });
+    created() {
+        this.getUserDetail(this.$route.params.userName);
     },
     methods: {
         toggleTab({ type }) {
@@ -96,13 +92,29 @@ export default {
             } else {
                 this.topicsList = this.userDetail.recentTopics;
             }
+        },
+        getUserDetail(userName) {
+            this.$store.dispatch('getUserDetail', { userName });
+        },
+        resetUserDetail() {
+            this.$store.dispatch('resetUserDetail');
         }
+    },
+    beforeRouteUpdate(to, from, next) {
+        this.getUserDetail(to.params.userName);
+        next();
+    },
+    beforeRouteLeave(to, from, next) {
+        this.resetUserDetail();
+        next();
     }
 };
 </script>
 
 <style lang="scss" scoped>
 .user {
+    height: 100%;
+
     &__info {
         padding-top: 15px;
         height: 180px;

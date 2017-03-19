@@ -7,49 +7,47 @@
             instance: 300
         }"
     >
-        <section>
-            <ul v-if="listLength !== 0">
-                <li class="topics-item" v-for="item of list" :key="item.id">
-                    <router-link :to="{name:'topic', params:{ id: item.id } }" events="'touchend'">
-                        <h2
-                            class="topics-item__title"
-                            :class="['topics-item__title--' + item.tab.type]"
-                            :title="item.tab.description"
-                        >
-                            {{ item.title }}
-                        </h2>
-                        <div class="topics-item__info">
-                            <img class="topics-item__avatar" :src="item.authorAvatar" alt="用户头像">
-                            <div class="topics-item__info-wrapper">
-                                <p class="topics-item__inline-info">
-                                    <span class="topics-item__name">{{ item.authorName }}</span>
-                                    <span class="topics-item__status">
-                                        <b class="topics-item__status--emphasis">{{ item.replyCount }}</b>
-                                         / {{ item.visitCount }}
-                                    </span>
-                                </p>
-                                <p class="topics-item__inline-info">
-                                    <timeago
-                                        class="topics-item__public-time"
-                                        :since="item.createTime"
-                                        :max-time="86400 * 365 * 10"
-                                        :auto-update="60 * 5"
-                                    >
-                                    </timeago>
-                                    <timeago
-                                        class="topics-item__reply-time"
-                                        :since="item.lastReplyTime"
-                                        :max-time="86400 * 365 * 10"
-                                        :auto-update="60 * 5"
-                                    >
-                                    </timeago>
-                                </p>
-                            </div>
+        <ul v-show="listLength !== 0">
+            <li class="topics-item" v-for="item of list" :key="item.id">
+                <router-link :to="{name:'topic', params:{ id: item.id } }" events="'touchend'">
+                    <h2
+                        class="topics-item__title"
+                        :class="['topics-item__title--' + item.tab.type]"
+                        :title="item.tab.description"
+                    >
+                        {{ item.title }}
+                    </h2>
+                    <div class="topics-item__info">
+                        <img class="topics-item__avatar" :src="item.authorAvatar" alt="用户头像">
+                        <div class="topics-item__info-wrapper">
+                            <p class="topics-item__inline-info">
+                                <span class="topics-item__name">{{ item.authorName }}</span>
+                                <span class="topics-item__status">
+                                    <b class="topics-item__status--emphasis">{{ item.replyCount }}</b>
+                                     / {{ item.visitCount }}
+                                </span>
+                            </p>
+                            <p class="topics-item__inline-info">
+                                <timeago
+                                    class="topics-item__public-time"
+                                    :since="item.createTime"
+                                    :max-time="86400 * 365 * 10"
+                                    :auto-update="60 * 5"
+                                >
+                                </timeago>
+                                <timeago
+                                    class="topics-item__reply-time"
+                                    :since="item.lastReplyTime"
+                                    :max-time="86400 * 365 * 10"
+                                    :auto-update="60 * 5"
+                                >
+                                </timeago>
+                            </p>
                         </div>
-                    </router-link>
-                </li>
-            </ul>
-        </section>
+                    </div>
+                </router-link>
+            </li>
+        </ul>
         <el-loading v-if="listLength === 0"></el-loading>
     </section>
 </template>
@@ -96,7 +94,7 @@ export default {
         },
         // 重置列表，加载第一页数据
         reloadList() {
-            this.$store.dispatch('resetList');
+            this.resetList();
             this.page = 1;
             this.getTopicsList();
         },
@@ -106,6 +104,10 @@ export default {
                 page: this.page,
                 tab: this.tab
             });
+        },
+        // 重置列表
+        resetList() {
+            this.$store.dispatch('resetList');
         }
     },
     watch: {
@@ -117,6 +119,14 @@ export default {
         $route() {
             this.reloadList();
         }
+    },
+    beforeRouteUpdate(to, from, next) {
+        this.resetList();
+        next();
+    },
+    beforeRouteLeave(to, from, next) {
+        this.resetList();
+        next();
     }
 };
 </script>

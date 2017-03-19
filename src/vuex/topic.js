@@ -7,24 +7,25 @@ const tabMap = {
     good: '精华',
     top: '置顶'
 };
+const defaultTopic = {
+    id: '',
+    title: '',
+    tab: {
+        type: '',
+        description: ''
+    },
+    authorId: '',
+    authorName: '',
+    authorAvatar: '',
+    createTime: '',
+    visitCount: '',
+    content: '',
+    replies: []
+};
 
 const topic = {
     state: {
-        topic: {
-            id: '',
-            title: '',
-            tab: {
-                type: '',
-                description: ''
-            },
-            authorId: '',
-            authorName: '',
-            authorAvatar: '',
-            createTime: '',
-            visitCount: '',
-            content: '',
-            replies: []
-        }
+        topic: defaultTopic
     },
     mutations: {
         HANDLE_TOPIC_DATA(state, topicData) {
@@ -61,6 +62,9 @@ const topic = {
             });
             handledTopic.replies = handledReplies;
             state.topic = handledTopic;
+        },
+        RESET_TOPIC_DATA(state) {
+            state.topic = defaultTopic;
         }
     },
     actions: {
@@ -76,6 +80,9 @@ const topic = {
                     commit('HANDLE_TOPIC_DATA', data.data);
                 }
             });
+        },
+        resetTopic({ commit }) {
+            commit('RESET_TOPIC_DATA');
         }
     }
 };
