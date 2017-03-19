@@ -109,6 +109,7 @@ function plugin(Vue) {
             //     scrollObj.postionX = postionX;
             //     scrollObj.postionY = postionY;
             // }
+            console.log('componentUpdated');
         },
         unbind(el) {
             // 设置 scroll 实例数组的索引号

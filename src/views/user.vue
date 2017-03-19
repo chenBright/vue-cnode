@@ -1,37 +1,102 @@
 <template>
     <section class="user">
         <section class="user__info">
-            <img class="user__avatar" src="https://avatars3.githubusercontent.com/u/12249635?v=3&s=120" alt="用户头像">
-            <p class="user__name">chenBright</p>
-            <p class="user__score">积分：220</p>
+            <img class="user__avatar" :src="userInfo.authorAvatar" alt="用户头像">
+            <p class="user__name">{{ userInfo.authorName }}</p>
+            <p class="user__score">积分：{{ userDetail.score }}</p>
         </section>
         <section class="topics">
             <ul class="topics__tabs">
-                <li class="topics__tab topics__tab--br">最近回复</li>
-                <li class="topics__tab topics__tab--active">最新发布</li>
-            </ul>
-            <ul class="topics__list">
-                <li class="topic-item">
-                    <img class="topic-item__avatar" src="https://avatars3.githubusercontent.com/u/12249635?v=3&s=120" alt="用户头像">
-                    <section class="topic-item__info">
-                        <h2 class="topic-item__title">有人知道Google的closure这个东西吗？npm上的这个是怎么玩的？</h2>
-                        <span class="topic-item__author">chenBright</span>
-                        <span class="topic-item__time">1个月前</span>
-                    </section>
+                <li
+                    class="topics__tab topics__tab--br"
+                    :class="{ 'topics__tab--active': tabType === 1 }"
+                    v-tap.prevent="{ methods: toggleTab, type: 1 }"
+                >
+                    最近回复
+                </li>
+                <li
+                    class="topics__tab"
+                    :class="{ 'topics__tab--active': tabType === 2 }"
+                    v-tap.prevent="{ methods: toggleTab, type: 2 }"
+                >
+                    最新发布
                 </li>
             </ul>
+            <section
+                v-scroll="{
+                    enableCallback: true,
+                    instance: 300
+                }"
+            >
+                <ul class="topics__list">
+                    <li class="topic-item" v-for="userItem of topicsList" :key="userItem.id">
+                        <router-link :to="{ name: 'user', params: { loginName: userItem.authorName } }" events="'touchend'">
+                            <img class="topic-item__avatar" :src="userItem.authorAvatar" alt="用户头像">
+                        </router-link>
+                        <router-link
+                            class="topic-item__info"
+                            :to="{ name:'topic', params:{ id: userItem.id } }"
+                            events="'touchend'"
+                        >
+                            <!-- <section class="topic-item__info"> -->
+                                <h2 class="topic-item__title">{{ userItem.title }}</h2>
+                                <span class="topic-item__author">{{ userItem.authorName }}</span>
+                                <timeago
+                                    class="topic-item__time"
+                                    :since="userItem.lastReplyTime"
+                                    :max-time="86400 * 365 * 10"
+                                    :auto-update="60 * 5"
+                                >
+                                </timeago>
+                            <!-- </section> -->
+                        </router-link>
+                    </li>
+                </ul>
+                <el-no-data v-if="topicsList.length === 0"></el-no-data>
+            </section>
         </section>
-        <el-no-data></el-no-data>
+        <el-loading v-if="false"></el-loading>
     </section>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+import loading from '../components/loading';
 import noData from '../components/no-data';
 
 export default {
     name: 'user',
     components: {
-        'el-no-data': noData
+        'el-no-data': noData,
+        'el-loading': loading
+    },
+    data() {
+        return {
+            topicsList: [],
+            tabType: 1
+        };
+    },
+    computed: mapState({
+        // 列表数据
+        userInfo: state => state.user.userInfo,
+        userDetail(state) {
+            const userDetail = state.user.userDetail;
+            this.topicsList = userDetail.recentReplies;
+            return userDetail;
+        }
+    }),
+    beforeCreate() {
+        this.$store.dispatch('getUserDetail', { loginName: this.$route.params.loginName });
+    },
+    methods: {
+        toggleTab({ type }) {
+            this.tabType = type;
+            if (type === 1) {
+                this.topicsList = this.userDetail.recentReplies;
+            } else {
+                this.topicsList = this.userDetail.recentTopics;
+            }
+        }
     }
 };
 </script>

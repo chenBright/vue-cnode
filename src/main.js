@@ -34,6 +34,13 @@ sync(store, router);
 
 Vue.config.productionTip = false;
 
+
+// 处理刷新的时候vuex被清空但是用户已经登录的情况
+const user = window.sessionStorage.user;
+if (user) {
+    store.dispatch('setUserInfo', JSON.parse(user));
+}
+
 new Vue({
     el: '#app',
     router,
