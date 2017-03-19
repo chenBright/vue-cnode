@@ -35,7 +35,6 @@ export default {
     computed: mapState({
         // 路由信息
         title(state) {
-            console.log(state.route);
             const route = state.route;
             const name = route.name;
             if (name !== 'list') {

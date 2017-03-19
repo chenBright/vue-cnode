@@ -33,7 +33,7 @@ export default new Router({
         }
     },
     {
-        path: '/topic',
+        path: '/topic/:id',
         name: 'topic',
         component: topic,
         meta: {

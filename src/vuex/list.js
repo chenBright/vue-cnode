@@ -1,8 +1,4 @@
-import axios from 'axios';
-
-const newAxios = axios.create({
-    baseURL: 'https://cnodejs.org/api/v1'
-});
+import ajax from './ajaxInstance';
 
 const tabMap = {
     share: '分享',
@@ -32,6 +28,7 @@ const list = {
                         type: item.tab,
                         description: tabMap[item.tab]
                     },
+                    authorId: item.author_id,
                     authorName: item.author.loginname,
                     authorAvatar: item.author.avatar_url,
                     createTime: item.create_at,
@@ -49,20 +46,25 @@ const list = {
     },
     actions: {
         getList({ commit }, { page, tab, limit = 20, mdrender = true }) {
-            const url = `/topics?page=${page}&tab=${tab}&limit=${limit}&mdrender=${mdrender}`;
-            newAxios.get(url)
-                .then((result) => {
-                    const data = result.data;
-                    if (data.success) {
-                        commit('HANDLE_LIST_DATA', data.data);
-                    }
-                });
+            ajax.get('/topics', {
+                params: {
+                    page,
+                    tab,
+                    limit,
+                    mdrender
+                }
+            })
+            .then((result) => {
+                const data = result.data;
+                if (data.success) {
+                    commit('HANDLE_LIST_DATA', data.data);
+                }
+            });
         },
         resetList({ commit }) {
             commit('RESET_LIST_DATA');
         }
     }
-    // getters: { ... }
 };
 
 export default list;

@@ -1,79 +1,120 @@
 <template>
-    <article class="topic">
-        <h2 class="topic__title">Node.js 2017年首场招聘专题</h2>
-        <div class="topic__info">
-            <img class="topic__avatar" src="https://avatars3.githubusercontent.com/u/12249635?v=3&s=120" alt="用户头像">
-            <div class="topic__info--col">
-                <span class="topic__author">chenBright</span>
-                <time class="topic__time">发布于1天前</time>
-            </div>
-            <div class="topic__info--right">
-                <span class="topic__type">精华</span>
-                <span class="topic__popularity">229浏览</span>
-            </div>
-        </div>
-        <section class='markdown-body topic__content'></section>
-        <h3 class="topic__reply"><b class="topic__reply--emphasis">2</b> 回复</h3>
-        <ul class="reply-list">
-            <li class="reply-item">
-                <div class="user">
-                    <img class="user__avatar" src="https://avatars3.githubusercontent.com/u/12249635?v=3&s=120" alt="用户头像">
-                    <span class="user__info">
-                        <span>chenBright</span>
-                        <span>发布于1天前</span>
-                    </span>
-                    <span class="user__operation">
-                        <span class="iconfont icon-good"></span>
-                        0
-                        <span class="iconfont icon-fenxiangbian" v-tap.prevent="{ methods: showReply }"></span>
-                    </span>
+    <article
+        class="topic"
+        v-scroll="{
+            enableCallback: true,
+            instance: 300
+        }"
+    >
+        <section>
+            <template v-if="topic.title !== ''">
+                <h2 class="topic__title">{{ topic.title }}</h2>
+                <div class="topic__info">
+                    <img class="topic__avatar" :src="topic.authorAvatar" alt="用户头像">
+                    <div class="topic__info--col">
+                        <span class="topic__author">{{ topic.authorName }}</span>
+                        <span class="topic__time">发布于
+                            <timeago
+                                :since="topic.createTime"
+                                :max-time="86400 * 365 * 10"
+                                :auto-update="60 * 5"
+                            >
+                            </timeago>
+                        </span>
+                    </div>
+                    <div class="topic__info--right">
+                        <span
+                            class="topic__type"
+                            :class="['topic__type--' + topic.tab.type]"
+                        >
+                            {{ topic.tab.description }}
+                        </span>
+                        <span class="topic__popularity">{{ topic.visitCount }}浏览</span>
+                    </div>
                 </div>
-                <div class="reply-item__content"></div>
+                <section class='markdown-body topic__content' v-html="topic.content"></section>
+                <h3 class="topic__reply"><b class="topic__reply--emphasis">{{ topic.replies.length }}</b> 回复</h3>
+                <ul class="reply-list" v-if="topic.length !== 0">
+                    <li class="reply-item" v-for="reply of topic.replies" :key="reply.id">
+                        <div class="user">
+                            <img class="user__avatar" :src="reply.authorAvatar" alt="用户头像">
+                            <span class="user__info">
+                                <span>{{ reply.authorName }}</span>
+                                <span class="topic__time">发布于
+                                    <timeago
+                                        :since="topic.createTime"
+                                        :max-time="86400 * 365 * 10"
+                                        :auto-update="60 * 5"
+                                    >
+                                    </timeago>
+                                </span>
+                            </span>
+                            <span class="user__operation">
+                                <span class="iconfont icon-good"></span>
+                                0
+                                <span
+                                    class="iconfont icon-fenxiangbian"
+                                    v-tap.prevent="{ methods: showReply, id: reply.id }"
+                                >
+                                </span>
+                            </span>
+                        </div>
+                        <div class="reply-item__content" v-html="reply.content"></div>
+                        <el-reply
+                            :user="`@${reply.authorName} `"
+                            v-if="reply.id === currentId"
+                            @replyConfirm="addReply"
+                            @replyCancel="hideReply"
+                        >
+                        </el-reply>
+                    </li>
+                </ul>
                 <el-reply
-                    :user="'@chenBright '"
-                    v-if="isReply"
                     @replyConfirm="addReply"
                     @replyCancel="hideReply"
                 >
                 </el-reply>
-            </li>
-        </ul>
-        <el-reply
-            v-if="isReply"
-            @replyConfirm="addReply"
-            @replyCancel="hideReply"
-        >
-        </el-reply>
+            </template>
+        </section>
+        <el-loading v-if="false"></el-loading>
     </article>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import 'github-markdown-css';
+import loading from '../components/loading';
 import reply from '../components/reply';
 
 export default {
     name: 'topic',
     components: {
+        'el-loading': loading,
         'el-reply': reply
     },
     data() {
         return {
-            isReply: false
+            currentId: ''
         };
     },
+    computed: mapState({
+        // 列表数据
+        topic: state => state.topic.topic,
+    }),
+    mounted() {
+        this.$store.dispatch('getTopic', {
+            id: this.$route.params.id
+        });
+    },
     methods: {
-        showReply() {
-            this.isReply = true;
+        showReply(params) {
+            this.currentId = params.id;
         },
         hideReply() {
-            this.isReply = false;
+            this.currentId = '';
         },
         addReply() {
         }
-    },
-    beforeRouteLeave(to, from, next) {
-        this.$events.emit('routerChange');
-        next();
     }
 };
 </script>
@@ -81,6 +122,7 @@ export default {
 <style lang="scss" scoped>
 .topic {
     padding: 0 15px;
+    height: 100%;
 
     &__title {
         margin: 15px 0;
@@ -127,6 +169,22 @@ export default {
         color: #ffffff;
         text-align: center;
         vertical-align: middle;
+
+        &--good {
+            background: #E67E22;
+        }
+        &--top {
+            background: #E74C3C;
+        }
+        &--share {
+            background: #1ABC9C;
+        }
+        &--ask {
+            background: #3498DB;
+        }
+        &--job {
+            background: #9B59B6;
+        }
     }
     &__content {
         margin-top: 15px;
@@ -143,10 +201,11 @@ export default {
     }
 }
 .reply-list {
-    margin-top: 15px;
+    margin-bottom: 15px;
 }
 .user {
     display: inline-flex;
+    padding-top: 15px;
     width: 100%;
 
     &__avatar {
@@ -170,6 +229,7 @@ export default {
 
     &__content {
         margin-bottom: 15px;
+        word-break: break-word;
     }
 }
 </style>
