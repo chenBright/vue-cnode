@@ -60,6 +60,8 @@ module.exports = {
     }],
     'no-new': 'off',
     // 生产环境中 禁止debugger语句
-    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
+    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    // 生产环境中 禁止debugger语句
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
   }
 }

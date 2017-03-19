@@ -53,7 +53,8 @@ export default new Router({
         name: 'message',
         component: message,
         meta: {
-            appTitle: '消息'
+            appTitle: '消息',
+            requiresAuth: true
         }
     },
     {
@@ -69,7 +70,8 @@ export default new Router({
         name: 'newTopic',
         component: newTopic,
         meta: {
-            appTitle: '新增主题'
+            appTitle: '新增主题',
+            requiresAuth: true
         }
     }]
 });

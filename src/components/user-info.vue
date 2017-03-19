@@ -3,13 +3,13 @@
         <div
             class="user-info--unlogin iconfont icon-denglu"
             v-tap.prevent="{ methods: login }"
-            v-if="!user.authorId"
+            v-if="!user.userId"
         >
             登录
         </div>
         <div class="user-info--login" v-tap.prevent="{ methods: toUser }" v-else>
-            <img class="user-info__avatar" :src="user.authorAvatar" alt="用户头像">
-            <span class="user-info__name">{{ user.authorName }}</span>
+            <img class="user-info__avatar" :src="user.userAvatar" alt="用户头像">
+            <span class="user-info__name">{{ user.userName }}</span>
             <span class="user-info__more iconfont icon-right"></span>
         </div>
     </div>
@@ -29,7 +29,7 @@ export default {
             this.$router.push({ name: 'login' });
         },
         toUser() {
-            const userName = this.user.authorName;
+            const userName = this.user.userName;
             this.$router.push({ name: 'user', params: { userName } });
         }
     }

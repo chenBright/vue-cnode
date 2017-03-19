@@ -102,8 +102,8 @@ export default {
         };
     },
     computed: mapState({
-        // 列表数据
-        topic: state => state.topic.topic,
+        // 话题数据
+        topic: state => state.topic.topic
     }),
     mounted() {
         this.$store.dispatch('getTopic', {
