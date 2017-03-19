@@ -73,9 +73,6 @@ export default {
             page: 0
         };
     },
-    mounted() {
-        this.loadList();
-    },
     computed: mapState({
         // 列表数据
         list: state => state.list.list,
@@ -88,6 +85,9 @@ export default {
             return this.list.length;
         }
     }),
+    mounted() {
+        this.loadList();
+    },
     methods: {
         // 获取列表数据
         loadList() {

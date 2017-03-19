@@ -32,6 +32,7 @@ export default {
 .page {
     flex: 1;
     overflow: hidden;
+    padding-bottom: 10px;
     text-align: left;
 }
 </style>
