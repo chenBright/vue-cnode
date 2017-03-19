@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import ajax from './ajax';
 
 const tabMap = {
@@ -56,7 +57,7 @@ const topic = {
                     authorAvatar: item.author.avatar_url,
                     id: item.id,
                     content: item.content,
-                    upsLength: item.ups.length
+                    ups: item.ups
                 };
                 return handledItem;
             });
@@ -65,6 +66,21 @@ const topic = {
         },
         RESET_TOPIC_DATA(state) {
             state.topic = defaultTopic;
+        },
+        UPS(state, { action, userId, replyIndex }) {
+            let ups = state.topic.replies[replyIndex].ups;
+            if (action === 'up') {
+                Vue.set(state.topic.replies[replyIndex], 'ups', ups.concat(userId));
+            } else {
+                const len = ups.length;
+                let i = len - 1;
+                for (; i >= 0; i -= 1) {
+                    if (ups[i] === userId) {
+                        break;
+                    }
+                }
+                ups = ups.splice(i, 1);
+            }
         }
     },
     actions: {
@@ -83,6 +99,21 @@ const topic = {
         },
         resetTopic({ commit }) {
             commit('RESET_TOPIC_DATA');
+        },
+        up({ commit }, { replyIndex, replyId, token, userId }) {
+            ajax.post(`/reply/${replyId}/ups`, {
+                accesstoken: token
+            })
+            .then((result) => {
+                const data = result.data;
+                if (data.success) {
+                    commit('UPS', {
+                        action: data.action,
+                        userId,
+                        replyIndex
+                    });
+                }
+            });
         }
     }
 };

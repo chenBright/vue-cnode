@@ -10,7 +10,7 @@
             <template v-if="topic.title !== ''">
                 <h2 class="topic__title">{{ topic.title }}</h2>
                 <div class="topic__info">
-                    <router-link :to="{ name: 'user', params: { loginName: topic.authorName } }" events="'touchend'">
+                    <router-link :to="{ name: 'user', params: { userName: topic.authorName } }" events="'touchend'">
                         <img class="topic__avatar" :src="topic.authorAvatar" alt="用户头像">
                     </router-link>
                     <div class="topic__info--col">
@@ -37,7 +37,7 @@
                 <section class='markdown-body topic__content' v-html="topic.content"></section>
                 <h3 class="topic__reply"><b class="topic__reply--emphasis">{{ topic.replies.length }}</b> 回复</h3>
                 <ul class="reply-list" v-if="topic.length !== 0">
-                    <li class="reply-item" v-for="reply of topic.replies" :key="reply.id">
+                    <li class="reply-item" v-for="(reply, index) in topic.replies" :key="reply.id">
                         <div class="user">
                             <router-link :to="{ name: 'user', params: { userName: reply.authorName } }" events="'touchend'">
                                 <img class="user__avatar" :src="reply.authorAvatar" alt="用户头像">
@@ -54,8 +54,15 @@
                                 </span>
                             </span>
                             <span class="user__operation">
-                                <span class="iconfont icon-good"></span>
-                                0
+                                <span
+                                    class="iconfont icon-good"
+                                    :class="{
+                                        'icon-good--active': isUps(reply.ups)
+                                    }"
+                                    v-tap.prevent="{ methods: up, replyId: reply.id, index }"
+                                >
+                                </span>
+                                    {{ reply.ups.length }}
                                 <span
                                     class="iconfont icon-fenxiangbian"
                                     v-tap.prevent="{ methods: showReply, id: reply.id }"
@@ -102,6 +109,8 @@ export default {
         };
     },
     computed: mapState({
+        // 用户信息
+        userInfo: state => state.userInfo.userInfo,
         // 话题数据
         topic: state => state.topic.topic
     }),
@@ -121,6 +130,17 @@ export default {
         },
         resetTopic() {
             this.$store.dispatch('resetTopic');
+        },
+        isUps(ids) {
+            return ids.indexOf(this.userInfo.userId) !== -1;
+        },
+        up({ replyId, index }) {
+            this.$store.dispatch('up', {
+                replyIndex: index,
+                replyId,
+                userId: this.userInfo.userId,
+                token: this.userInfo.token
+            });
         }
     },
     beforeRouteLeave(to, from, next) {
@@ -234,6 +254,9 @@ export default {
     &__operation {
         margin-top: -5px;
     }
+}
+.icon-good--active {
+    color: #80bd01;
 }
 .reply-item {
     border-bottom: 1px solid #d4d4d4;
