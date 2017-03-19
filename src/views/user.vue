@@ -30,18 +30,26 @@
             >
                 <ul class="topics__list">
                     <li class="topic-item" v-for="userItem of topicsList" :key="userItem.id">
-                        <img class="topic-item__avatar" :src="userItem.authorAvatar" alt="用户头像">
-                        <section class="topic-item__info">
-                            <h2 class="topic-item__title">{{ userItem.title }}</h2>
-                            <span class="topic-item__author">{{ userItem.authorName }}</span>
-                            <timeago
-                                class="topic-item__time"
-                                :since="userItem.lastReplyTime"
-                                :max-time="86400 * 365 * 10"
-                                :auto-update="60 * 5"
-                            >
-                            </timeago>
-                        </section>
+                        <router-link :to="{ name: 'user', params: { loginName: userItem.authorName } }" events="'touchend'">
+                            <img class="topic-item__avatar" :src="userItem.authorAvatar" alt="用户头像">
+                        </router-link>
+                        <router-link
+                            class="topic-item__info"
+                            :to="{ name:'topic', params:{ id: userItem.id } }"
+                            events="'touchend'"
+                        >
+                            <!-- <section class="topic-item__info"> -->
+                                <h2 class="topic-item__title">{{ userItem.title }}</h2>
+                                <span class="topic-item__author">{{ userItem.authorName }}</span>
+                                <timeago
+                                    class="topic-item__time"
+                                    :since="userItem.lastReplyTime"
+                                    :max-time="86400 * 365 * 10"
+                                    :auto-update="60 * 5"
+                                >
+                                </timeago>
+                            <!-- </section> -->
+                        </router-link>
                     </li>
                 </ul>
                 <el-no-data v-if="topicsList.length === 0"></el-no-data>

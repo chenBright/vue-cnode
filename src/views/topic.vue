@@ -10,7 +10,9 @@
             <template v-if="topic.title !== ''">
                 <h2 class="topic__title">{{ topic.title }}</h2>
                 <div class="topic__info">
-                    <img class="topic__avatar" :src="topic.authorAvatar" alt="用户头像">
+                    <router-link :to="{ name: 'user', params: { loginName: topic.authorName } }" events="'touchend'">
+                        <img class="topic__avatar" :src="topic.authorAvatar" alt="用户头像">
+                    </router-link>
                     <div class="topic__info--col">
                         <span class="topic__author">{{ topic.authorName }}</span>
                         <span class="topic__time">发布于
