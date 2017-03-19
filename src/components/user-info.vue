@@ -21,7 +21,7 @@ import { mapState } from 'vuex';
 export default {
     name: 'user-info',
     computed: mapState({
-        // 列表数据
+        // 用户信息
         user: state => state.user.userInfo,
     }),
     methods: {
@@ -29,8 +29,8 @@ export default {
             this.$router.push({ name: 'login' });
         },
         toUser() {
-            const loginName = this.user.authorName;
-            this.$router.push({ name: 'user', params: { loginName } });
+            const userName = this.user.authorName;
+            this.$router.push({ name: 'user', params: { userName } });
         }
     }
 };

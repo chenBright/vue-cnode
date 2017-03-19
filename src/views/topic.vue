@@ -39,7 +39,9 @@
                 <ul class="reply-list" v-if="topic.length !== 0">
                     <li class="reply-item" v-for="reply of topic.replies" :key="reply.id">
                         <div class="user">
-                            <img class="user__avatar" :src="reply.authorAvatar" alt="用户头像">
+                            <router-link :to="{ name: 'user', params: { userName: reply.authorName } }" events="'touchend'">
+                                <img class="user__avatar" :src="reply.authorAvatar" alt="用户头像">
+                            </router-link>
                             <span class="user__info">
                                 <span>{{ reply.authorName }}</span>
                                 <span class="topic__time">发布于
@@ -116,7 +118,14 @@ export default {
             this.currentId = '';
         },
         addReply() {
+        },
+        resetTopic() {
+            this.$store.dispatch('resetTopic');
         }
+    },
+    beforeRouteLeave(to, from, next) {
+        this.resetTopic();
+        next();
     }
 };
 </script>
