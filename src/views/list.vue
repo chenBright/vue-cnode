@@ -1,7 +1,6 @@
 <template>
     <section
         class="list"
-        :style="{ textAlign: listLength === 0 ? 'center' : 'left' }"
         v-scroll="{
             method: loadList,
             enableCallback: enableLoad,
@@ -9,7 +8,7 @@
         }"
     >
         <section>
-            <ul v-if="listLength !== 0" ref="ul">
+            <ul v-if="listLength !== 0">
                 <li class="topics-item" v-for="item of list" :key="item.id">
                     <router-link :to="{name:'topic', params:{ id: item.id } }" events="'touchend'">
                         <h2
