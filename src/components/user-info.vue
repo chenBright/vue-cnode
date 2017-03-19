@@ -29,7 +29,8 @@ export default {
             this.$router.push({ name: 'login' });
         },
         toUser() {
-            this.$router.push({ name: 'user' });
+            const loginName = this.user.authorName;
+            this.$router.push({ name: 'user', params: { loginName } });
         }
     }
 };
