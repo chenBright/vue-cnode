@@ -12,6 +12,7 @@ Vue.use(Router);
 
 export default new Router({
     mode: 'history',
+    base: '/vue-cnode/',
     routes: [{
         path: './',
         component: index,
@@ -20,7 +21,14 @@ export default new Router({
         }
     },
     {
-        path: './list',
+        path: '/vue-cnode',
+        component: index,
+        meta: {
+            appTitle: '首页'
+        }
+    },
+    {
+        path: '/list',
         name: 'list',
         component: list,
         meta: {

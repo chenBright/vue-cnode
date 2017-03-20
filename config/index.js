@@ -6,7 +6,8 @@ module.exports = {
     env: require('./prod.env'),
     index: path.resolve(__dirname, '../docs/index.html'),
     assetsRoot: path.resolve(__dirname, '../docs'),
-    assetsSubDirectory: './static',
+    assetsSubDirectory: 'static',
+
     assetsPublicPath: 'https://chenbright.github.io/vue-cnode/',
     productionSourceMap: true,
     // Gzip off by default as many popular static hosts such as
