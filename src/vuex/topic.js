@@ -56,7 +56,7 @@ const topic = {
                     authorAvatar: item.author.avatar_url,
                     id: item.id,
                     content: item.content,
-                    upsLength: item.ups.length
+                    ups: item.ups
                 };
                 return handledItem;
             });
@@ -65,6 +65,31 @@ const topic = {
         },
         RESET_TOPIC_DATA(state) {
             state.topic = defaultTopic;
+        },
+        UPS(state, { action, userId, replyIndex }) {
+            let ups = state.topic.replies[replyIndex].ups;
+            if (action === 'up') {
+                ups.push(userId);
+            } else {
+                const len = ups.length;
+                let i = len - 1;
+                for (; i >= 0; i -= 1) {
+                    if (ups[i] === userId) {
+                        break;
+                    }
+                }
+                ups = ups.splice(i, 1);
+            }
+        },
+        REPLY(state, { replyId, content }) {
+            const topicData = state.topic;
+            topicData.replies.push({
+                authorName: topicData.authorName,
+                authorAvatar: topicData.authorAvatar,
+                id: replyId,
+                content,
+                ups: []
+            });
         }
     },
     actions: {
@@ -83,6 +108,40 @@ const topic = {
         },
         resetTopic({ commit }) {
             commit('RESET_TOPIC_DATA');
+        },
+        up({ commit }, { replyIndex, replyId, token, userId }) {
+            ajax.post(`/reply/${replyId}/ups`, {
+                accesstoken: token
+            })
+            .then((result) => {
+                const data = result.data;
+                if (data.success) {
+                    commit('UPS', {
+                        action: data.action,
+                        userId,
+                        replyIndex
+                    });
+                }
+            });
+        },
+        reply({ commit }, { topicId, token, content, replyId }) {
+            const postData = {
+                accesstoken: token,
+                content: content.mdContent
+            };
+            if (replyId) {
+                postData.reply_id = replyId;
+            }
+            ajax.post(`/topic/${topicId}/replies`, postData)
+                .then((result) => {
+                    const data = result.data;
+                    if (data.success) {
+                        commit('REPLY', {
+                            replyId: data.reply_id,
+                            content: content.htmlContent
+                        });
+                    }
+                });
         }
     }
 };

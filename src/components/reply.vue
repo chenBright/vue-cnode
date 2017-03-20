@@ -16,6 +16,7 @@
 export default {
     name: 'el-reply',
     props: {
+        replyId: String,
         user: {
             type: String,
             default: ''
@@ -28,7 +29,7 @@ export default {
     },
     methods: {
         confirm() {
-            this.$emit('replyConfirm', this.replyContent);
+            this.$emit('replyConfirm', this.replyContent, this.replyId);
         },
         cancel() {
             this.$emit('replyCancel');
