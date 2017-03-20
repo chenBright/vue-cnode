@@ -2,22 +2,40 @@
     <section class="el-menu" :class="{ 'el-menu--show': isShow }">
         <user-info></user-info>
         <nav>
-            <router-link class="nav-link nav-link--adjust iconfont icon-all" :to="{ 'name':'list',query:{ tab:'all' } }">
+            <router-link
+                class="nav-link nav-link--adjust iconfont icon-all"
+                :to="{ 'name':'list', query: { tab: 'all' } }"
+            >
                 全部
             </router-link>
-            <router-link class="nav-link iconfont icon-good" :to="{ 'name':'list',query:{ tab:'good' } }">
+            <router-link
+                class="nav-link iconfont icon-good"
+                :to="{ 'name':'list', query: { tab: 'good' } }"
+            >
                 精华
             </router-link>
-            <router-link class="nav-link iconfont icon-share" :to="{ 'name':'list',query:{ tab:'share' } }">
+            <router-link
+                class="nav-link iconfont icon-share"
+                :to="{ 'name':'list', query: { tab: 'share' } }"
+            >
                 分享
             </router-link>
-            <router-link class="nav-link iconfont icon-questionandanswer01" :to="{ 'name':'list',query:{ tab:'ask' } }">
+            <router-link
+                class="nav-link iconfont icon-questionandanswer01"
+                :to="{ 'name':'list', query: { tab: 'ask' } }"
+            >
                 问答
             </router-link>
-            <router-link class="nav-link nav-link--line iconfont icon-icon" :to="{ 'name':'list',query:{ tab:'job' } }">
+            <router-link
+                class="nav-link nav-link--line iconfont icon-icon"
+                :to="{ 'name':'list', query: { tab: 'job' } }"
+            >
                 招聘
             </router-link>
-            <router-link class="nav-link iconfont icon-msg line" :to="{ 'name':'message' }">
+            <router-link
+                class="nav-link iconfont icon-msg line"
+                :to="{ 'name': 'message' }"
+            >
                 消息
             </router-link>
         </nav>
