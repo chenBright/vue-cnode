@@ -1,33 +1,79 @@
 <template>
     <div class="add-topic">
         <div class="line">选择分类：
-            <select class="add-tab">
+            <select class="add-tab" v-model="tab">
                 <option value="share">分享</option>
                 <option value="ask">问答</option>
                 <option value="job">招聘</option>
             </select>
-            <a class="add-btn">发布</a>
+            <a class="add-btn" v-tap.prevent="{ methods: addTopic }">发布</a>
         </div>
         <div class="line">
             <input
-                class="add-title error"
+                class="add-title"
                 type="text"
-                placeholder="标题，字数10字以上"
+                placeholder="标题，10个字以上"
                 max-length="100"
+                v-model="title"
             >
         </div>
         <textarea
             class="add-content"
             rows="35"
             placeholder='回复支持Markdown语法,请注意标记代码'
+            v-model="content"
         >
         </textarea>
     </div>
 </template>
 
 <script>
+/* eslint no-alert: "off" */
+import { mapState } from 'vuex';
+import ajax from '../vuex/ajax';
+
 export default {
-    name: 'newTopic'
+    name: 'newTopic',
+    data() {
+        return {
+            title: '',
+            tab: 'share',
+            content: ''
+        };
+    },
+    computed: mapState({
+        // 用户信息
+        userInfo: state => state.userInfo.userInfo
+    }),
+    methods: {
+        addTopic() {
+            if (this.title.length < 10) {
+                alert('标题至少10个字');
+                return;
+            }
+            if (this.content === '') {
+                alert('内容不能为空');
+                return;
+            }
+            ajax.post('/topics', {
+                accesstoken: this.userInfo.token,
+                title: this.title,
+                tab: this.tab,
+                content: this.content
+            })
+            .then((result) => {
+                const data = result.data;
+                if (data.success) {
+                    this.$router.push({
+                        name: 'topic',
+                        params: { id: data.topic_id }
+                    });
+                } else {
+                    alert(data.error_msg);
+                }
+            });
+        }
+    }
 };
 </script>
 
@@ -78,6 +124,7 @@ export default {
         border-color: #d4d4d4;
         border-radius: 4px;
     }
+    // 错误提示
     .error {
         border: 1px solid red;
     }

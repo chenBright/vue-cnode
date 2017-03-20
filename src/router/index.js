@@ -4,7 +4,7 @@ import index from '../views/index';
 import list from '../views/list';
 import topic from '../views/topic';
 import login from '../views/login';
-import newTopic from '../views/newTopic';
+import newTopic from '../views/new';
 import user from '../views/user';
 import message from '../views/message';
 
