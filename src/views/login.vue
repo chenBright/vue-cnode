@@ -13,7 +13,8 @@ export default {
     name: 'login',
     data() {
         return {
-            token: '946b1563-10f4-4027-b757-4590d315c28e'
+            token: ''
+            // token: '946b1563-10f4-4027-b757-4590d315c28e'
         };
     },
     computed: mapState({
