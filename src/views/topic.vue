@@ -124,6 +124,15 @@ export default {
     },
     methods: {
         showReply(params) {
+            if (!this.userInfo.userId) {
+                this.$router.push({
+                    name: 'login',
+                    params: {
+                        redirect: encodeURIComponent(this.$route.path)
+                    }
+                });
+                return;
+            }
             this.currentId = params.id;
         },
         hideReply() {
@@ -154,6 +163,15 @@ export default {
             return ids.indexOf(this.userInfo.userId) !== -1;
         },
         up({ replyId, index }) {
+            if (!this.userInfo.userId) {
+                this.$router.push({
+                    name: 'login',
+                    params: {
+                        redirect: encodeURIComponent(this.$route.path)
+                    }
+                });
+                return;
+            }
             this.$store.dispatch('up', {
                 replyIndex: index,
                 replyId,
