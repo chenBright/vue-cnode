@@ -11,7 +11,7 @@ import message from '../views/message';
 Vue.use(Router);
 
 export default new Router({
-    mode: 'history',
+    // mode: 'history',
     base: '/vue-cnode/',
     routes: [{
         path: '/',
@@ -41,7 +41,7 @@ export default new Router({
         }
     },
     {
-        path: './topic/:id',
+        path: '/topic/:id',
         name: 'topic',
         component: topic,
         meta: {
@@ -49,7 +49,7 @@ export default new Router({
         }
     },
     {
-        path: './user/:userName',
+        path: '/user/:userName',
         name: 'user',
         component: user,
         meta: {
@@ -57,7 +57,7 @@ export default new Router({
         }
     },
     {
-        path: './message',
+        path: '/message',
         name: 'message',
         component: message,
         meta: {
@@ -66,7 +66,7 @@ export default new Router({
         }
     },
     {
-        path: './login',
+        path: '/login',
         name: 'login',
         component: login,
         meta: {
@@ -74,7 +74,7 @@ export default new Router({
         }
     },
     {
-        path: './newTopic',
+        path: '/newTopic',
         name: 'newTopic',
         component: newTopic,
         meta: {
