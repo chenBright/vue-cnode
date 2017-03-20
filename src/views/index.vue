@@ -1,12 +1,20 @@
 <template>
     <section class="index">
-        <img class="vue-logo" src="../assets/images/vue-logo.png">
+        <img class="vue-logo" src="https://cn.vuejs.org/images/logo.png">
     </section>
 </template>
 
 <script>
 export default {
-    name: 'index'
+    name: 'index',
+    mounted() {
+        setTimeout(() => {
+            this.$router.push({
+                name: 'list',
+                query: { tab: 'all' }
+            });
+        }, 1000);
+    }
 };
 </script>
 
@@ -15,6 +23,8 @@ export default {
     display: block;
     margin: auto;
     margin-top: 60px;
+    width: 140px;
+    height: 140pxk
 }
 .el-loading {
     display: block;
