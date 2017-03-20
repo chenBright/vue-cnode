@@ -20,7 +20,6 @@ const userDetail = {
     },
     mutations: {
         SET_MESSAGE(state, message) {
-            console.log(message);
             const allMessages = message.hasnot_read_messages.concat(message.has_read_messages);
             const handledMessages = allMessages.map(handleMessageArray);
             state.messages = handledMessages;
