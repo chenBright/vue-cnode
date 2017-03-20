@@ -73,6 +73,7 @@
                         <div class="markdown-body reply-item__content" v-html="reply.content"></div>
                         <el-reply
                             :user="`@${reply.authorName} `"
+                            :replyId="reply.id"
                             v-if="reply.id === currentId"
                             @replyConfirm="addReply"
                             @replyCancel="hideReply"
@@ -93,6 +94,8 @@
 
 <script>
 import { mapState } from 'vuex';
+import { uniq } from 'lodash';
+import { markdown } from 'markdown';
 import 'github-markdown-css';
 import loading from '../components/loading';
 import reply from '../components/reply';
@@ -126,7 +129,23 @@ export default {
         hideReply() {
             this.currentId = '';
         },
-        addReply() {
+        addReply(content, replyId) {
+            const mdContent = this.linkUsers(content);
+            let htmlContent = markdown.toHTML(mdContent);
+            htmlContent = `<div class="markdown-text">${htmlContent}</div>`;
+            const data = {
+                topicId: this.topic.id,
+                token: this.userInfo.token,
+                content: {
+                    mdContent,
+                    htmlContent
+                }
+            };
+            if (replyId) {
+                data.replyId = replyId;
+            }
+            this.$store.dispatch('reply', data);
+            this.hideReply();
         },
         resetTopic() {
             this.$store.dispatch('resetTopic');
@@ -141,6 +160,59 @@ export default {
                 userId: this.userInfo.userId,
                 token: this.userInfo.token
             });
+        },
+        /**
+         * 根据文本内容，替换为数据库中的数据
+         * @param {String} text 文本内容
+         * @param {Function} callback 回调函数
+         */
+        linkUsers(text) {
+            const users = this.fetchUsers(text);
+            let handledText = text;
+            for (let i = 0, l = users.length; i < l; i += 1) {
+                const name = users[i];
+                handledText = handledText.replace(
+                    new RegExp(`@${name}\\b(?!\\])`, 'g'), `[@${name}](/user/${name})`
+                );
+            }
+            return handledText;
+        },
+
+        /**
+         * 从文本中提取出@username 标记的用户名数组
+         * @param {String} text 文本内容
+         * @return {Array} 用户名数组
+         */
+        fetchUsers(text) {
+            if (!text) {
+                return [];
+            }
+            const ignoreRegexs = [
+                /```.+?```/g, // 去除单行的 ```
+                /^```[\s\S]+?^```/gm, // ``` 里面的是 pre 标签内容
+                /`[\s\S]+?`/g, // 同一行中，`some code` 中内容也不该被解析
+                /^.*/gm, // 4个空格也是 pre 标签，在这里 . 不会匹配换行
+                /\b\S*?@[^\s]*?\..+?\b/g, // somebody@gmail.com 会被去除
+                /\[@.+?\\]\(\/.+?\)/g // 已经被 link 的 username
+            ];
+
+            let handledText = text;
+            ignoreRegexs.forEach((ignoreRegex) => {
+                handledText = handledText.replace(ignoreRegex, '');
+            });
+
+            const results = handledText.match(/@[a-z0-9\-_]+\b/igm);
+            let names = [];
+            if (results) {
+                for (let i = 0, l = results.length; i < l; i += 1) {
+                    let s = results[i];
+                    // remove leading char @
+                    s = s.slice(1);
+                    names.push(s);
+                }
+            }
+            names = uniq(names);
+            return names;
         }
     },
     beforeRouteLeave(to, from, next) {

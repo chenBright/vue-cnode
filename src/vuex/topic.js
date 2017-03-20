@@ -1,4 +1,3 @@
-import Vue from 'vue';
 import ajax from './ajax';
 
 const tabMap = {
@@ -70,7 +69,7 @@ const topic = {
         UPS(state, { action, userId, replyIndex }) {
             let ups = state.topic.replies[replyIndex].ups;
             if (action === 'up') {
-                Vue.set(state.topic.replies[replyIndex], 'ups', ups.concat(userId));
+                ups.push(userId);
             } else {
                 const len = ups.length;
                 let i = len - 1;
@@ -81,6 +80,16 @@ const topic = {
                 }
                 ups = ups.splice(i, 1);
             }
+        },
+        REPLY(state, { replyId, content }) {
+            const topicData = state.topic;
+            topicData.replies.push({
+                authorName: topicData.authorName,
+                authorAvatar: topicData.authorAvatar,
+                id: replyId,
+                content,
+                ups: []
+            });
         }
     },
     actions: {
@@ -114,6 +123,25 @@ const topic = {
                     });
                 }
             });
+        },
+        reply({ commit }, { topicId, token, content, replyId }) {
+            const postData = {
+                accesstoken: token,
+                content: content.mdContent
+            };
+            if (replyId) {
+                postData.reply_id = replyId;
+            }
+            ajax.post(`/topic/${topicId}/replies`, postData)
+                .then((result) => {
+                    const data = result.data;
+                    if (data.success) {
+                        commit('REPLY', {
+                            replyId: data.reply_id,
+                            content: content.htmlContent
+                        });
+                    }
+                });
         }
     }
 };
