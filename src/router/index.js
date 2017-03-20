@@ -14,7 +14,7 @@ export default new Router({
     mode: 'history',
     base: '/vue-cnode/',
     routes: [{
-        path: './',
+        path: '/',
         component: index,
         meta: {
             appTitle: '首页'
