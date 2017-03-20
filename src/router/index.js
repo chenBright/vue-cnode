@@ -11,17 +11,9 @@ import message from '../views/message';
 Vue.use(Router);
 
 export default new Router({
-    // mode: 'history',
     base: '/vue-cnode/',
     routes: [{
         path: '/',
-        component: index,
-        meta: {
-            appTitle: '首页'
-        }
-    },
-    {
-        path: '/vue-cnode',
         component: index,
         meta: {
             appTitle: '首页'
