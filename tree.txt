@@ -1,42 +1,4 @@
-# vue-cnode
-
-> 基于vue.js的Cnodejs.org社区的webapp <br>
-> [线上访问地址](https://chenbright.github.io/vue-cnode/)
-
-### 安装
-
-通过`git clone`将项目拷贝到本地
-
-```shell
-git clone git@github.com:chenBright/vue-cnode.git
-```
-
-通过`npm`安装本地服务第三方依赖模块（需要已安装[Node.js](https://nodejs.org/))
-
-```
-npm install
-```
-
-启动服务（http://localhost:8080）
-
-```
-npm run dev
-```
-
-发布代码
-
-```
-npm run build
-```
-
-发布代码，并查看包分析报告
-
-```
-npm run build --report
-```
-
-### 目录结构
-```
+/Users/chenbright/Desktop/vue-cnode
 ├── .babelrc
 ├── .editorconfig
 ├── .eslintignore
@@ -115,4 +77,3 @@ npm run build --report
    ├── .gitkeep
    └── cnode_icon_32.png
 
-```
